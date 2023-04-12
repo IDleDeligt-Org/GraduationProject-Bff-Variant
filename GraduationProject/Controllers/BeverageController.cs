@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraduationProject.Controllers
 {
-    [Route("api/Beverage")]
+    [Route("api/beverage")]
     [ApiController]
     public class BeverageController : ControllerBase
     {
@@ -17,38 +17,78 @@ namespace GraduationProject.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Beverage>> GetBeverages()
-        {
-            return _context.Beverages.ToList();
-        }
+        //[HttpGet]
+        //public ActionResult<IEnumerable<Beverage>> GetBeverages()
+        //{
+        //    return _context.Beverages.ToList();
+        //}
 
-        [HttpGet("{id}")]
-        public ActionResult<Beverage> GetBeverage(int id)
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetBeverages(string name)
         {
-            Beverage? beverage = _context.Beverages.Find(id);
+            IEnumerable<Beverage> beverages = await _context.Beverages.Include(b => b.BeverageIngredients).ThenInclude(bi => bi.Ingredient).ToListAsync();
 
-            if (beverage == null)
+            if (!string.IsNullOrEmpty(name))
             {
-                return NotFound();
+                beverages = _context.Beverages.Where(b => b.Name.Contains(name));
             }
 
-            return beverage;
+            return Ok(beverages); 
         }
 
-        [HttpPut("{id}")]
-        public IActionResult PutBeverage(int id, Beverage beverage)
+        [HttpGet("id/{id}")]
+        public async Task<IActionResult> GetBeverage(int id)
         {
-            if (id != beverage.BeverageId)
-            {
-                return BadRequest();
-            }
+            //IQueryable<Beverage> beverages = _context.Beverages.Include(b => b.BeverageIngredients).ThenInclude(bi => bi.Ingredient);
+            IEnumerable<Beverage> beverages = await _context.Beverages.ToListAsync();
 
-            _context.Entry(beverage).State = EntityState.Modified;
-            _context.SaveChanges();
-
-            return NoContent();
+            return Ok(beverages);
         }
+
+        //[HttpPut("{id}")]
+        //public IActionResult PutBeverage(int id, Beverage beverage)
+        //{
+        //    if (id != beverage.BeverageId)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    var beverageToUpdate = _context.Beverages
+        //        .Include(b => b.BeverageIngredients)
+        //        .SingleOrDefault(b => b.BeverageId == id);
+
+        //    if (beverageToUpdate == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    // Update the beverage properties
+        //    beverageToUpdate.Name = beverage.Name;
+        //    beverageToUpdate.Description = beverage.Description;
+        //    beverageToUpdate.ImageUrl = beverage.ImageUrl;
+
+        //    // Update the beverage ingredients
+        //    var newBeverageIngredients = new List<BeverageIngredient>();
+        //    foreach (var beverageIngredient in beverage.BeverageIngredients)
+        //    {
+        //        var existingBeverageIngredient = beverageToUpdate.BeverageIngredients.SingleOrDefault(bi => bi.IngredientId == beverageIngredient.IngredientId);
+        //        if (existingBeverageIngredient != null)
+        //        {
+        //            existingBeverageIngredient.Quantity = beverageIngredient.Quantity;
+        //        }
+        //        else
+        //        {
+        //            newBeverageIngredients.Add(beverageIngredient);
+        //        }
+        //    }
+
+        //    beverageToUpdate.BeverageIngredients.AddRange(newBeverageIngredients);
+
+        //    _context.SaveChanges();
+
+        //    return NoContent();
+        //}
+
 
         [HttpPost]
         public ActionResult<Beverage> PostBeverage(Beverage beverage)
@@ -59,10 +99,10 @@ namespace GraduationProject.Controllers
             return CreatedAtAction(nameof(GetBeverage), new { id = beverage.BeverageId }, beverage);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteBeverage(int id)
+        [HttpDelete("{name}")]
+        public IActionResult DeleteBeverage(string name)
         {
-            Beverage? beverage = _context.Beverages.Find(id);
+            Beverage? beverage = _context.Beverages.Find(name);
             if (beverage == null)
             {
                 return NotFound();
