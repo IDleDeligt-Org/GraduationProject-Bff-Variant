@@ -1,6 +1,7 @@
 ﻿using GraduationProject.Models.CocktailDB;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Reflection;
+using System.Text.Json;
 
 namespace GraduationProject.CocktailDB
 {
@@ -8,26 +9,24 @@ namespace GraduationProject.CocktailDB
     {
         private readonly HttpClient _httpClient;
 
-        public CocktailDBApi()
+        public CocktailDBApi(HttpClient client)
         {
-            _httpClient = new HttpClient()
-            {
-                BaseAddress = new Uri("www.thecocktaildb.com/")
-            };
+            _httpClient = client;
         }
 
         public async Task<List<Drink>> GetDrinks(string search)
         {
-            string url = string.Format("api/json/v1/1/search.php?s={0}", search);
-            List<DrinkApiResponse> result = new();
-            var response = await _httpClient.GetAsync(url);
+            var response = await _httpClient.GetAsync($"api/json/v1/1/search.php?s={search}");
 
             if(response.IsSuccessStatusCode)
             {
-                await response.Content.ReadFromJsonAsync<DrinkApiResponse>();
+                var stringResponse = await response.Content.ReadAsStringAsync();
+
+                var result = JsonSerializer.Deserialize<List<DrinkApiResponse>>(stringResponse,
+                        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
                 List<Drink> drinks = new();
-                foreach(DrinkApiResponse apiDrink in result)
+                foreach (DrinkApiResponse apiDrink in result)
                 {
                     drinks.Add(MapToDrinkModel(apiDrink));
                 }
@@ -35,7 +34,7 @@ namespace GraduationProject.CocktailDB
             }
             else
             {
-                throw new Exception($"Failed to retrieve searchinformation. Status code: {response.StatusCode}");
+                throw new HttpRequestException($"Failed to retrieve searchinformation. Status code: {response.StatusCode}");
             }
         }
 
