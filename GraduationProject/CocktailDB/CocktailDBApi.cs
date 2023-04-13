@@ -20,7 +20,7 @@ namespace GraduationProject.CocktailDB
 
             if(response.IsSuccessStatusCode)
             {
-                DrinksApiResponse? newResult = await response.Content.ReadFromJsonAsync<DrinksApiResponse>();
+                BeveragesApiResponse? result = await response.Content.ReadFromJsonAsync<BeveragesApiResponse>();
 
                 List<Beverage> beverages = new List<Beverage>() { };
 
@@ -39,25 +39,20 @@ namespace GraduationProject.CocktailDB
             }
         }
 
-        public async Task <List<Beverage>> GetBeverageById(int id)
+        public async Task <Beverage> GetBeverageById(int id)
         {
             HttpResponseMessage? response = await _httpClient.GetAsync($"api/json/v1/1/lookup.php?i={id}");
 
             if (response.IsSuccessStatusCode)
             {
-                DrinksApiResponse? newResult = await response.Content.ReadFromJsonAsync<DrinksApiResponse>();
+                BeveragesApiResponse? result = await response.Content.ReadFromJsonAsync<BeveragesApiResponse>();
 
-                List<Beverage> drinks = new List<Beverage>();
-
-                if (newResult?.drinks != null)
+                Beverage beverage = new();
+                if (result?.drinks != null)
                 {
-
-                    foreach (DrinkApiResponse apiDrink in newResult?.drinks!)
-                    {
-                        drinks.Add(DrinkMapper.DrinkToBeverage(apiDrink));
-                    }
+                    beverage = DrinkMapper.DrinkToBeverage(result.drinks.First());
                 }
-                    return drinks;
+                return beverage;
             }
             else
             {

@@ -30,6 +30,7 @@ namespace GraduationProject.Controllers
             {
                 return NotFound();
             }
+
             List<Beverage>? userFavorites = await _context.Favorites
                 .Include(f => f.Beverage)
                 .ThenInclude(b => b.BeverageIngredients)
