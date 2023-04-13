@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GraduationProject.Controllers
-{
-    [Route("api/[controller]")]
+{ 
+    [Route("api/ingredient")]
     [ApiController]
     public class IngredientController : ControllerBase
     {

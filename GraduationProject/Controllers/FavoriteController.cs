@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraduationProject.Controllers
 {
-    [Route("api/User")]
+    [Route("api/Favorite")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class FavoriteController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public UserController(ApplicationDbContext context)
+        public FavoriteController(ApplicationDbContext context)
         {
             _context = context;
         }

@@ -8,6 +8,7 @@ namespace GraduationProject.Models
         public int FavoriteId { get; set; }
         public int BeverageId { get; set; }
         public int UserId { get; set; }
+        public bool localDB { get; set; }//?
 
 
         //Navigation Properties

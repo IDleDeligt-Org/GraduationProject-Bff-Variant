@@ -4,7 +4,7 @@ using GraduationProject.Models.CocktailDB;
 
 public static class DrinkMapper
 {
-    public static Beverage DrinkToBeverage(DrinkApiResponse apiDrink)
+    public static Beverage ApiResponseToBeverage(BeverageApiResponse apiDrink)
     {
         Beverage beverage = new()
         {
