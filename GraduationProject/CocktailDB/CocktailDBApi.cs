@@ -9,7 +9,7 @@ namespace GraduationProject.CocktailDB
     {
         private readonly HttpClient _httpClient;
 
-        public CocktailDBApi()
+        public CocktailDBApi(HttpClient client)
         {
             _httpClient = new HttpClient()
             {
@@ -36,7 +36,7 @@ namespace GraduationProject.CocktailDB
             }
             else
             {
-                throw new Exception($"Failed to retrieve searchinformation. Status code: {response.StatusCode}");
+                throw new HttpRequestException($"Failed to retrieve searchinformation. Status code: {response.StatusCode}");
             }
         }
 

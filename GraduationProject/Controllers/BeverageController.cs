@@ -14,10 +14,10 @@ namespace GraduationProject.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ICocktailDBApi _cocktail;
 
-        public BeverageController(ApplicationDbContext context)
+        public BeverageController(ApplicationDbContext context, ICocktailDBApi cocktailDBApi)
         {
             _context = context;
-            _cocktail = new CocktailDBApi();
+            _cocktail = cocktailDBApi;
         }
 
         [HttpGet("{search}")]
