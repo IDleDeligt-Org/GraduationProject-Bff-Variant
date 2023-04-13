@@ -116,8 +116,8 @@ namespace GraduationProject.Controllers
             _context.Beverages.Add(beverage);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetBeverage), new { id = beverage.BeverageId }, beverage);
-        }
+//            return CreatedAtAction(nameof(GetBeverage), new { id = beverage.BeverageId }, beverage);
+//        }
 
         [HttpDelete("{name}")]
         public async Task<IActionResult> DeleteBeverage(string name)
