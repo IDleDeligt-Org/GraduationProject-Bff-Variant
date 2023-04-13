@@ -33,6 +33,10 @@ namespace GraduationProject.Controllers
             // Query third-party API
             var apiResults = await _cocktail.GetBeverages(search);
 
+            if(localResults != null)
+            {
+                var results = localResults.Concat(apiResults).ToList();
+                return Ok(results);
 
             // Combine and return results
             var results = localResults.Concat(apiResults).ToList();
@@ -41,18 +45,18 @@ namespace GraduationProject.Controllers
         }
 
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetBeverages(string name)
-        {
-            IEnumerable<Beverage> beverages = await _context.Beverages.Include(b => b.BeverageIngredients).ThenInclude(bi => bi.Ingredient).ToListAsync();
+        //[HttpGet("{name}")]
+        //public async Task<IActionResult> GetBeverages(string name)
+        //{
+        //    IEnumerable<Beverage> beverages = await _context.Beverages.Include(b => b.BeverageIngredients).ThenInclude(bi => bi.Ingredient).ToListAsync();
 
-            if (!string.IsNullOrEmpty(name))
-            {
-                beverages = _context.Beverages.Where(b => b.Name.Contains(name));
-            }
+        //    if (!string.IsNullOrEmpty(name))
+        //    {
+        //        beverages = _context.Beverages.Where(b => b.Name.Contains(name));
+        //    }
 
-            return Ok(beverages);
-        }
+        //    return Ok(beverages);
+        //}
 
         [HttpGet("id/{id}")]
         public async Task<IActionResult> GetBeverage(int id)

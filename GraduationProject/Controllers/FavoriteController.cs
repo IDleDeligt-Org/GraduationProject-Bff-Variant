@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraduationProject.Controllers
 {
-    [Route("api/Favorites")]
+    [Route("api/Favorite")]
     [ApiController]
     public class FavoriteController : ControllerBase
     {
@@ -37,9 +37,9 @@ namespace GraduationProject.Controllers
                 .Where(f => f.UserId == userId)
                 .Select(f => f.Beverage)
                 .ToListAsync();
-
+        
             if (userFavorites == null)
-            {
+        {
                 return NotFound();
             }
 
@@ -52,7 +52,7 @@ namespace GraduationProject.Controllers
                     Beverage? externalBeverage = await _cocktail.GetBeverageById(beverage.BeverageId);
                     externalBeverages.Add(externalBeverage);
                 }
-            }
+        }
 
             // Combine local and external beverages
             List<Beverage>? combinedFavorites = userFavorites

@@ -1,6 +1,8 @@
 ﻿namespace GraduationProject.Models
 {
-    public class BeverageSource
+    public enum BeverageSource
     {
+        Local,
+        CocktailDB
     }
 }

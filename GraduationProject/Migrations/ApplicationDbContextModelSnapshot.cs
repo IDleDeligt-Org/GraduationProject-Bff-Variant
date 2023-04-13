@@ -167,6 +167,9 @@ namespace GraduationProject.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("localDB")
+                        .HasColumnType("bit");
+
                     b.HasKey("FavoriteId");
 
                     b.HasIndex("BeverageId");
@@ -180,13 +183,15 @@ namespace GraduationProject.Migrations
                         {
                             FavoriteId = 1,
                             BeverageId = 1,
-                            UserId = 1
+                            UserId = 1,
+                            localDB = false
                         },
                         new
                         {
                             FavoriteId = 2,
                             BeverageId = 2,
-                            UserId = 2
+                            UserId = 2,
+                            localDB = false
                         });
                 });
 
