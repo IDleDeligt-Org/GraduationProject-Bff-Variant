@@ -38,9 +38,10 @@ namespace GraduationProject.Controllers
                 var results = localResults.Concat(apiResults).ToList();
                 return Ok(results);
 
-            }
             // Combine and return results
-            return Ok(apiResults);
+            var results = localResults.Concat(apiResults).ToList();
+
+            return Ok(results);
         }
 
 

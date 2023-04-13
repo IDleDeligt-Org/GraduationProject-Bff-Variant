@@ -33,9 +33,14 @@ namespace GraduationProject.Models
         public string? ImageAttribution { get; set; }
         public bool CreativeCommonsConfirmed { get; set; }
 
+       
+
         //Navigation Properties
         public virtual ICollection<BeverageIngredient> BeverageIngredients { get; set; }
 
         public virtual ICollection<Favorite> Favorites { get; set; }
+
+        [Required]
+        public BeverageSource Source { get; set; }
     }
 }
