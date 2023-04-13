@@ -11,16 +11,12 @@ namespace GraduationProject.CocktailDB
 
         public CocktailDBApi(HttpClient client)
         {
-            _httpClient = new HttpClient()
-            {
-                BaseAddress = new Uri("https://www.thecocktaildb.com/")
-            };
+            _httpClient = client;
         }
 
         public async Task<List<Beverage>> GetBeverages(string search)
         {
-            string url = string.Format("api/json/v1/1/search.php?s={0}", search);
-            var response = await _httpClient.GetAsync(url);
+            var response = await _httpClient.GetAsync($"api/json/v1/1/search.php?s={search}");
 
             if(response.IsSuccessStatusCode)
             {
@@ -28,7 +24,7 @@ namespace GraduationProject.CocktailDB
 
                 List<Beverage> drinks = new List<Beverage>();
 
-                foreach(DrinkApiResponse apiDrink in newResult?.drinks)
+                foreach(DrinkApiResponse apiDrink in newResult?.drinks!)
                 {
                     drinks.Add(DrinkMapper.DrinkToBeverage(apiDrink));
                 }

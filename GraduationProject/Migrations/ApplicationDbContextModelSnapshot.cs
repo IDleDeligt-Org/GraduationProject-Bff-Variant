@@ -16,7 +16,7 @@ namespace GraduationProject.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -32,12 +32,18 @@ namespace GraduationProject.Migrations
                     b.Property<bool>("Alcohol")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("CreativeCommonsConfirmed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Glass")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Image")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageAttribution")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Instruction")
@@ -66,6 +72,7 @@ namespace GraduationProject.Migrations
                         {
                             BeverageId = 1,
                             Alcohol = true,
+                            CreativeCommonsConfirmed = false,
                             Glass = "Martini Glass",
                             Image = "http://potatomargarita.com",
                             Instruction = "Shake it like a polaroid picture",
@@ -76,6 +83,7 @@ namespace GraduationProject.Migrations
                         {
                             BeverageId = 2,
                             Alcohol = true,
+                            CreativeCommonsConfirmed = false,
                             Glass = "Thumbler",
                             Image = "http://tomatomartini.com",
                             Instruction = "Stir it up",
@@ -86,6 +94,7 @@ namespace GraduationProject.Migrations
                         {
                             BeverageId = 3,
                             Alcohol = false,
+                            CreativeCommonsConfirmed = false,
                             Glass = "Long glass",
                             Image = "http://brocolioldfashined.com",
                             Instruction = "On the grind",
