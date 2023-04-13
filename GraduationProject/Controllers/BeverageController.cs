@@ -20,39 +20,39 @@ namespace GraduationProject.Controllers
             _cocktail = cocktailDBApi;
         }
 
-        [HttpGet("{search}")]
-        public async Task<IActionResult> GetBeverages(string search)
-        {
-            // Query local database
-            var localResults = _context.Beverages
-                .Where(b => b.Name.Contains(search))
-                .Include(b => b.BeverageIngredients)
-                .ThenInclude(bi => bi.Ingredient)
-                .ToList();
-
-            // Query third-party API
-            var apiResults = await _cocktail.GetBeverages(search);
-
-
-            // Combine and return results
-            var results = localResults.Concat(apiResults).ToList();
-
-            return Ok(results);
-        }
-
-
-        //[HttpGet("{name}")]
-        //public async Task<IActionResult> GetBeverages(string name)
+        //[HttpGet("{search}")]
+        //public async Task<IActionResult> GetBeverages(string search)
         //{
-        //    IEnumerable<Beverage> beverages = await _context.Beverages.Include(b => b.BeverageIngredients).ThenInclude(bi => bi.Ingredient).ToListAsync();
+        //    // Query local database
+        //    var localResults = await _context.Beverages
+        //        .Where(b => b.Name.Contains(search))
+        //        .Include(b => b.BeverageIngredients)
+        //        .ThenInclude(bi => bi.Ingredient)
+        //        .ToListAsync();
 
-        //    if (!string.IsNullOrEmpty(name))
-        //    {
-        //        beverages = _context.Beverages.Where(b => b.Name.Contains(name));
-        //    }
+        //    // Query third-party API
+        //    var apiResults = await _cocktail.GetBeverages(search);
 
-        //    return Ok(beverages); 
+
+        //    // Combine and return results
+        //    var results = localResults.Concat(apiResults).ToList();
+
+        //    return Ok(results);
         //}
+
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetBeverages(string name)
+        {
+            IEnumerable<Beverage> beverages = await _context.Beverages.Include(b => b.BeverageIngredients).ThenInclude(bi => bi.Ingredient).ToListAsync();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                beverages = _context.Beverages.Where(b => b.Name.Contains(name));
+            }
+
+            return Ok(beverages);
+        }
 
         [HttpGet("id/{id}")]
         public async Task<IActionResult> GetBeverage(int id)

@@ -13,6 +13,10 @@ builder.Services.AddDbContext<GraduationProject.ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddHttpClient<ICocktailDBApi, CocktailDBApi>(httpClient =>
+{
+    httpClient.BaseAddress = new Uri("https://www.thecocktaildb.com");
+});
 
 var app = builder.Build();
 
