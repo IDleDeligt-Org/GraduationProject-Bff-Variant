@@ -20,25 +20,25 @@ namespace GraduationProject.Controllers
             _cocktail = cocktailDBApi;
         }
 
-        //[HttpGet("{search}")]
-        //public async Task<IActionResult> GetBeverages(string search)
-        //{
-        //    // Query local database
-        //    var localResults = await _context.Beverages
-        //        .Where(b => b.Name.Contains(search))
-        //        .Include(b => b.BeverageIngredients)
-        //        .ThenInclude(bi => bi.Ingredient)
-        //        .ToListAsync();
+        [HttpGet("{search}")]
+        public async Task<IActionResult> GetBeverages(string search)
+        {
+            // Query local database
+            var localResults = await _context.Beverages
+                .Where(b => b.Name.Contains(search))
+                .Include(b => b.BeverageIngredients)
+                .ThenInclude(bi => bi.Ingredient)
+                .ToListAsync();
 
-        //    // Query third-party API
-        //    var apiResults = await _cocktail.GetBeverages(search);
+            // Query third-party API
+            var apiResults = await _cocktail.GetBeverages(search);
 
 
-        //    // Combine and return results
-        //    var results = localResults.Concat(apiResults).ToList();
+            // Combine and return results
+            var results = localResults.Concat(apiResults).ToList();
 
-        //    return Ok(results);
-        //}
+            return Ok(results);
+        }
 
 
         [HttpGet("{name}")]
