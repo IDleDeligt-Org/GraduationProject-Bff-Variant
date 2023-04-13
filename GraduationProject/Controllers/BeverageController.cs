@@ -24,11 +24,11 @@ namespace GraduationProject.Controllers
         public async Task<IActionResult> GetBeverages(string search)
         {
             // Query local database
-            var localResults = _context.Beverages
+            var localResults = await _context.Beverages
                 .Where(b => b.Name.Contains(search))
                 .Include(b => b.BeverageIngredients)
                 .ThenInclude(bi => bi.Ingredient)
-                .ToList();
+                .ToListAsync();
 
             // Query third-party API
             var apiResults = await _cocktail.GetBeverages(search);
