@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using GraduationProject.CocktailDB;
 using GraduationProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,108 +12,131 @@ namespace GraduationProject.Controllers
     public class BeverageController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICocktailDBApi _cocktail;
 
         public BeverageController(ApplicationDbContext context)
         {
             _context = context;
+            _cocktail = new CocktailDBApi();
         }
 
-        //[HttpGet]
-        //public ActionResult<IEnumerable<Beverage>> GetBeverages()
-        //{
-        //    return _context.Beverages.ToList();
-        //}
-
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetBeverages(string name)
+        [HttpGet("{search}")]
+        public async Task<IActionResult> GetBeverages(string search)
         {
-            IEnumerable<Beverage> beverages = await _context.Beverages.Include(b => b.BeverageIngredients).ThenInclude(bi => bi.Ingredient).ToListAsync();
+            // Query local database
+            var localResults = _context.Beverages
+                .Where(b => b.Name.Contains(search))
+                .Include(b => b.BeverageIngredients)
+                .ThenInclude(bi => bi.Ingredient)
+                .ToList();
 
-            if (!string.IsNullOrEmpty(name))
-            {
-                beverages = _context.Beverages.Where(b => b.Name.Contains(name));
-            }
+            // Query third-party API
+            var apiResults = await _cocktail.GetBeverages(search);
 
-            return Ok(beverages); 
+
+            // Combine and return results
+            var results = localResults.Concat(apiResults).ToList();
+
+            return Ok(results);
         }
+
+
+        //[HttpGet("{name}")]
+        //public async Task<IActionResult> GetBeverages(string name)
+        //{
+        //    IEnumerable<Beverage> beverages = await _context.Beverages.Include(b => b.BeverageIngredients).ThenInclude(bi => bi.Ingredient).ToListAsync();
+
+        //    if (!string.IsNullOrEmpty(name))
+        //    {
+        //        beverages = _context.Beverages.Where(b => b.Name.Contains(name));
+        //    }
+
+        //    return Ok(beverages); 
+        //}
 
         [HttpGet("id/{id}")]
         public async Task<IActionResult> GetBeverage(int id)
         {
-            //IQueryable<Beverage> beverages = _context.Beverages.Include(b => b.BeverageIngredients).ThenInclude(bi => bi.Ingredient);
             IEnumerable<Beverage> beverages = await _context.Beverages.ToListAsync();
 
             return Ok(beverages);
         }
 
-        //[HttpPut("{id}")]
-        //public IActionResult PutBeverage(int id, Beverage beverage)
-        //{
-        //    if (id != beverage.BeverageId)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutBeverage(int id, Beverage beverage)
+        {
+            if (id != beverage.BeverageId)
+            {
+                return BadRequest();
+            }
 
-        //    var beverageToUpdate = _context.Beverages
-        //        .Include(b => b.BeverageIngredients)
-        //        .SingleOrDefault(b => b.BeverageId == id);
+            Beverage? beverageToUpdate = await _context.Beverages
+                .Include(b => b.BeverageIngredients)
+                .SingleOrDefaultAsync(b => b.BeverageId == id);
 
-        //    if (beverageToUpdate == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (beverageToUpdate == null)
+            {
+                return NotFound();
+            }
 
-        //    // Update the beverage properties
-        //    beverageToUpdate.Name = beverage.Name;
-        //    beverageToUpdate.Description = beverage.Description;
-        //    beverageToUpdate.ImageUrl = beverage.ImageUrl;
+            // Update the beverage properties
+            beverageToUpdate.Name = beverage.Name;
+            beverageToUpdate.Tag = beverage.Tag;
+            beverageToUpdate.Alcohol = beverage.Alcohol;
+            beverageToUpdate.Instruction = beverage.Instruction;
+            beverageToUpdate.Image = beverage.Image;
+            beverageToUpdate.Video = beverage.Video;
 
-        //    // Update the beverage ingredients
-        //    var newBeverageIngredients = new List<BeverageIngredient>();
-        //    foreach (var beverageIngredient in beverage.BeverageIngredients)
-        //    {
-        //        var existingBeverageIngredient = beverageToUpdate.BeverageIngredients.SingleOrDefault(bi => bi.IngredientId == beverageIngredient.IngredientId);
-        //        if (existingBeverageIngredient != null)
-        //        {
-        //            existingBeverageIngredient.Quantity = beverageIngredient.Quantity;
-        //        }
-        //        else
-        //        {
-        //            newBeverageIngredients.Add(beverageIngredient);
-        //        }
-        //    }
+            // Update the beverage ingredients
+            List<BeverageIngredient>? newBeverageIngredients = new List<BeverageIngredient>();
+            foreach (BeverageIngredient beverageIngredient in beverage.BeverageIngredients)
+            {
+                BeverageIngredient? existingBeverageIngredient = beverageToUpdate.BeverageIngredients.SingleOrDefault(bi => bi.IngredientId == beverageIngredient.IngredientId);
+                if (existingBeverageIngredient != null)
+                {
+                    existingBeverageIngredient.Measurment = beverageIngredient.Measurment;
+                }
+                else
+                {
+                    newBeverageIngredients.Add(beverageIngredient);
+                }
+            }
 
-        //    beverageToUpdate.BeverageIngredients.AddRange(newBeverageIngredients);
+            //beverageToUpdate.BeverageIngredients.AddRange(newBeverageIngredients);
 
-        //    _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
 
         [HttpPost]
-        public ActionResult<Beverage> PostBeverage(Beverage beverage)
+        public async Task<ActionResult<Beverage>> PostBeverage(Beverage beverage)
         {
             _context.Beverages.Add(beverage);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetBeverage), new { id = beverage.BeverageId }, beverage);
         }
 
         [HttpDelete("{name}")]
-        public IActionResult DeleteBeverage(string name)
+        public async Task<IActionResult> DeleteBeverage(string name)
         {
-            Beverage? beverage = _context.Beverages.Find(name);
+            Beverage? beverage = await _context.Beverages
+                .Include(b => b.BeverageIngredients)
+                .SingleOrDefaultAsync(b => b.Name == name);
+
             if (beverage == null)
             {
                 return NotFound();
             }
 
             _context.Beverages.Remove(beverage);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
+
     }
 }
 

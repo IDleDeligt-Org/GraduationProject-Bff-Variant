@@ -30,6 +30,8 @@ namespace GraduationProject.Models
 
         [DataType(DataType.Url)]
         public string? Video { get; set; }
+        public string? ImageAttribution { get; set; }
+        public bool CreativeCommonsConfirmed { get; set; }
 
         //Navigation Properties
         public virtual ICollection<BeverageIngredient> BeverageIngredients { get; set; }
