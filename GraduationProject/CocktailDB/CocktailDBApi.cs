@@ -20,14 +20,14 @@ namespace GraduationProject.CocktailDB
 
             if(response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<BeverageApiResponse>();
+                var result = await response.Content.ReadFromJsonAsync<BeveragesApiResponse>();
 
                 List<Beverage> drinks = new List<Beverage>() { };
 
                 if(result?.drinks != null) {
                     foreach (BeverageApiResponse apiDrink in result?.drinks!)
                     {
-                        drinks.Add(DrinkMapper.ApiResponseToBeverage(apiDrink));
+                        drinks.Add(DrinkMapper.DrinkToBeverage(apiDrink));
                     }
                 }
               

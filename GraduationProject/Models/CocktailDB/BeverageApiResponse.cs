@@ -1,6 +1,6 @@
 ﻿namespace GraduationProject.Models.CocktailDB
 {
-    public class BeverageApiResponse
+    public class BeveragesApiResponse
     {
         public IEnumerable<BeverageApiResponse>? drinks { get; set; }
     }
