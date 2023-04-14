@@ -20,14 +20,16 @@ namespace GraduationProject
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, UserName = "ChuckNorris", Password = "NinjaKick", Email = "kickass@gmail.com" },
-                new User { UserId = 2, UserName = "BruceLee", Password = "RoundHouseKick", Email = "iiiiiijjjaaa@hotmail.com" }
-            );
+                 new User { UserId = 1, UserName = "ChuckNorris", Password = "NinjaKick", Email = "kickass@gmail.com" },
+                 new User { UserId = 2, UserName = "BruceLee", Password = "RoundHouseKick", Email = "iiiiiijjjaaa@hotmail.com" }
+             );
 
             modelBuilder.Entity<Favorite>().HasData(
-                new Favorite { FavoriteId = 1, UserId = 1, BeverageId = 1 },
-                new Favorite { FavoriteId = 2, UserId = 2, BeverageId = 2 }
+                new Favorite { FavoriteId = 1, UserId = 1, Source = BeverageSource.Local, FavoriteBeverageId = 1 },
+                new Favorite { FavoriteId = 2, UserId = 2, Source = BeverageSource.Local, FavoriteBeverageId = 2 },
+                new Favorite { FavoriteId = 3, UserId = 2, Source = BeverageSource.CocktailDB,  FavoriteBeverageId = 11000 } 
             );
 
             modelBuilder.Entity<Beverage>().HasData(

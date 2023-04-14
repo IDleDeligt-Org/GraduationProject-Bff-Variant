@@ -18,7 +18,8 @@ public static class DrinkMapper
             Image = apiDrink.strDrinkThumb,
             ImageAttribution = apiDrink.strImageAttribution,
             CreativeCommonsConfirmed = (apiDrink.strCreativeCommonsConfirmed.ToLower() == "yes" ? true : false),
-            BeverageIngredients = new List<BeverageIngredient>()
+            BeverageIngredients = new List<BeverageIngredient>(),
+            Source = BeverageSource.CocktailDB,
         };
 
         for (int i = 1; i <= 15; i++)

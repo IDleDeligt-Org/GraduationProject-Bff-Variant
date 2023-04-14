@@ -24,50 +24,52 @@ namespace GraduationProject.Controllers
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<Beverage>>> GetUserFavorites(int userId)
         {
-            User? user = _context.Users.Find(userId);
+            User? user = await _context.Users.FindAsync(userId);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            List<Beverage>? userFavorites = await _context.Favorites
-                .Include(f => f.Beverage)
-                .ThenInclude(b => b.BeverageIngredients)
-                .ThenInclude(bi => bi.Ingredient)
+            List<Favorite>? userFavorites = await _context.Favorites
                 .Where(f => f.UserId == userId)
-                .Select(f => f.Beverage)
                 .ToListAsync();
-        
+
             if (userFavorites == null)
-        {
+            {
                 return NotFound();
             }
 
-            // Fetch external beverages
-            List<Beverage>? externalBeverages = new List<Beverage>();
-            foreach (var beverage in userFavorites)
+           
+            List<Beverage> fullListFavorites = new List<Beverage>();
+
+            foreach (Favorite favorite in userFavorites)
             {
-                if (beverage.Source == BeverageSource.CocktailDB)
+                if (favorite.Source == BeverageSource.Local)
                 {
-                    Beverage? externalBeverage = await _cocktail.GetBeverageById(beverage.BeverageId);
-                    externalBeverages.Add(externalBeverage);
+                    Beverage? localBeverage = await _context.Beverages.FindAsync(favorite.FavoriteBeverageId);
+                    if (localBeverage != null)
+                    {
+                        fullListFavorites.Add(localBeverage);
+                    }
                 }
+                else if (favorite.Source == BeverageSource.CocktailDB)
+                {
+                    Beverage? externalBeverage = await _cocktail.GetBeverageById(favorite.FavoriteBeverageId);
+                    if (externalBeverage != null)
+                    {
+                        fullListFavorites.Add(externalBeverage);
+                    }
+                }
+            }
+
+            return fullListFavorites;
         }
 
-            // Combine local and external beverages
-            List<Beverage>? combinedFavorites = userFavorites
-                .Where(b => b.Source == BeverageSource.Local)
-                .Concat(externalBeverages)
-                .ToList();
-
-            return combinedFavorites;
-        }
-        
         [HttpGet("{id}")]
-        public ActionResult<User> GetUser(int id)
+        public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = _context.Users.Find(id);
+            User? user = await _context.Users.FindAsync(id);
 
             if (user == null)
             {
@@ -77,43 +79,49 @@ namespace GraduationProject.Controllers
             return user;
         }
 
-        
-        [HttpPut("{id}")]
-        public IActionResult PutUser(int id, User user)
-        {
-            if (id != user.UserId)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
+        //[HttpPut("{id}")]
+        //public IActionResult PutUser(int id, User user)
+        //{
+        //    if (id != user.UserId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            return NoContent();
-        }
+        //    _context.Entry(user).State = EntityState.Modified;
+        //    _context.SaveChanges();
 
-        
+        //    return NoContent();
+        //}
+
+
         [HttpPost]
-        public ActionResult<User> PostUser(User user)
+        public async Task<ActionResult<Favorite>> PostFavorite(Favorite favorite)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            if (favorite.Beverage.Source == BeverageSource.CocktailDB || favorite.Beverage.Source == BeverageSource.Local)
+            
+            { _context.Favorites.Add(favorite);
+            await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+            return CreatedAtAction(nameof(GetUserFavorites), new { userId = favorite.UserId }, favorite);
+            }
+        else
+    
+        return BadRequest("Invalid beverage source.");
         }
 
-        
-        [HttpDelete("{id}")]
-        public IActionResult DeleteUser(int id)
+
+    [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFavorite(int id)
         {
-            var user = _context.Users.Find(id);
-            if (user == null)
+            Favorite? favorite = await _context.Favorites.FindAsync(id);
+            if (favorite == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
-            _context.SaveChanges();
+            _context.Favorites.Remove(favorite);
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230413090743_AddedFieldImageCreative")]
-    partial class AddedFieldImageCreative
+    [Migration("20230414115115_initialcreate")]
+    partial class initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,6 +59,9 @@ namespace GraduationProject.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("Source")
+                        .HasColumnType("int");
+
                     b.Property<string>("Tag")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -80,6 +83,7 @@ namespace GraduationProject.Migrations
                             Image = "http://potatomargarita.com",
                             Instruction = "Shake it like a polaroid picture",
                             Name = "Potato Margarita",
+                            Source = 0,
                             Tag = "ordinary"
                         },
                         new
@@ -91,6 +95,7 @@ namespace GraduationProject.Migrations
                             Image = "http://tomatomartini.com",
                             Instruction = "Stir it up",
                             Name = "Tomato Martini",
+                            Source = 0,
                             Tag = "cocktail"
                         },
                         new
@@ -102,6 +107,7 @@ namespace GraduationProject.Migrations
                             Image = "http://brocolioldfashined.com",
                             Instruction = "On the grind",
                             Name = "Brocoli Old Fashioned",
+                            Source = 0,
                             Tag = "ordinary"
                         });
                 });
@@ -167,6 +173,9 @@ namespace GraduationProject.Migrations
                     b.Property<int>("BeverageId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Source")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -183,12 +192,14 @@ namespace GraduationProject.Migrations
                         {
                             FavoriteId = 1,
                             BeverageId = 1,
+                            Source = 0,
                             UserId = 1
                         },
                         new
                         {
                             FavoriteId = 2,
                             BeverageId = 2,
+                            Source = 0,
                             UserId = 2
                         });
                 });

@@ -40,7 +40,7 @@ namespace GraduationProject.Models
 
         public virtual ICollection<Favorite> Favorites { get; set; }
 
-        [Required]
+        //[Required]
         public BeverageSource Source { get; set; }
     }
 }

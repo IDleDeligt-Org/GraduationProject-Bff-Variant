@@ -7,7 +7,7 @@
 namespace GraduationProject.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialcreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,7 +26,8 @@ namespace GraduationProject.Migrations
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Video = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageAttribution = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreativeCommonsConfirmed = table.Column<bool>(type: "bit", nullable: false)
+                    CreativeCommonsConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    Source = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +99,7 @@ namespace GraduationProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BeverageId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    localDB = table.Column<bool>(type: "bit", nullable: false)
+                    Source = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,12 +120,12 @@ namespace GraduationProject.Migrations
 
             migrationBuilder.InsertData(
                 table: "Beverages",
-                columns: new[] { "BeverageId", "Alcohol", "CreativeCommonsConfirmed", "Glass", "Image", "ImageAttribution", "Instruction", "Name", "Tag", "Video" },
+                columns: new[] { "BeverageId", "Alcohol", "CreativeCommonsConfirmed", "Glass", "Image", "ImageAttribution", "Instruction", "Name", "Source", "Tag", "Video" },
                 values: new object[,]
                 {
-                    { 1, true, false, "Martini Glass", "http://potatomargarita.com", null, "Shake it like a polaroid picture", "Potato Margarita", "ordinary", null },
-                    { 2, true, false, "Thumbler", "http://tomatomartini.com", null, "Stir it up", "Tomato Martini", "cocktail", null },
-                    { 3, false, false, "Long glass", "http://brocolioldfashined.com", null, "On the grind", "Brocoli Old Fashioned", "ordinary", null }
+                    { 1, true, false, "Martini Glass", "http://potatomargarita.com", null, "Shake it like a polaroid picture", "Potato Margarita", 0, "ordinary", null },
+                    { 2, true, false, "Thumbler", "http://tomatomartini.com", null, "Stir it up", "Tomato Martini", 0, "cocktail", null },
+                    { 3, false, false, "Long glass", "http://brocolioldfashined.com", null, "On the grind", "Brocoli Old Fashioned", 0, "ordinary", null }
                 });
 
             migrationBuilder.InsertData(
@@ -158,11 +159,11 @@ namespace GraduationProject.Migrations
 
             migrationBuilder.InsertData(
                 table: "Favorites",
-                columns: new[] { "FavoriteId", "BeverageId", "UserId", "localDB" },
+                columns: new[] { "FavoriteId", "BeverageId", "Source", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, false },
-                    { 2, 2, 2, false }
+                    { 1, 1, 0, 1 },
+                    { 2, 2, 0, 2 }
                 });
 
             migrationBuilder.CreateIndex(
