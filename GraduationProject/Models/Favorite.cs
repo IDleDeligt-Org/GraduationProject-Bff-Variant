@@ -15,7 +15,7 @@ namespace GraduationProject.Models
 
 
         //Navigation Properties
-        public virtual Beverage Beverage { get; set; }
+        
         public virtual User User { get; set; }
         
        

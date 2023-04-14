@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230414123047_beveragesourseupdated")]
-    partial class beveragesourseupdated
+    [Migration("20230414140708_initialcreate")]
+    partial class initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,7 +170,7 @@ namespace GraduationProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoriteId"));
 
-                    b.Property<int>("BeverageId")
+                    b.Property<int>("FavoriteBeverageId")
                         .HasColumnType("int");
 
                     b.Property<int>("Source")
@@ -181,8 +181,6 @@ namespace GraduationProject.Migrations
 
                     b.HasKey("FavoriteId");
 
-                    b.HasIndex("BeverageId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Favorites");
@@ -191,21 +189,21 @@ namespace GraduationProject.Migrations
                         new
                         {
                             FavoriteId = 1,
-                            BeverageId = 1,
+                            FavoriteBeverageId = 1,
                             Source = 0,
                             UserId = 1
                         },
                         new
                         {
                             FavoriteId = 2,
-                            BeverageId = 2,
+                            FavoriteBeverageId = 2,
                             Source = 0,
                             UserId = 2
                         },
                         new
                         {
                             FavoriteId = 3,
-                            BeverageId = 11000,
+                            FavoriteBeverageId = 11000,
                             Source = 1,
                             UserId = 2
                         });
@@ -326,19 +324,11 @@ namespace GraduationProject.Migrations
 
             modelBuilder.Entity("GraduationProject.Models.Favorite", b =>
                 {
-                    b.HasOne("GraduationProject.Models.Beverage", "Beverage")
-                        .WithMany("Favorites")
-                        .HasForeignKey("BeverageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GraduationProject.Models.User", "User")
                         .WithMany("Favorites")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Beverage");
 
                     b.Navigation("User");
                 });
@@ -346,8 +336,6 @@ namespace GraduationProject.Migrations
             modelBuilder.Entity("GraduationProject.Models.Beverage", b =>
                 {
                     b.Navigation("BeverageIngredients");
-
-                    b.Navigation("Favorites");
                 });
 
             modelBuilder.Entity("GraduationProject.Models.Ingredient", b =>

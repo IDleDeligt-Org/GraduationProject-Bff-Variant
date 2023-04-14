@@ -38,7 +38,6 @@ namespace GraduationProject.Models
         //Navigation Properties
         public virtual ICollection<BeverageIngredient> BeverageIngredients { get; set; }
 
-        public virtual ICollection<Favorite> Favorites { get; set; }
 
         //[Required]
         public BeverageSource Source { get; set; }
