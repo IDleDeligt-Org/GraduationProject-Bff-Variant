@@ -97,19 +97,13 @@ namespace GraduationProject.Migrations
                 {
                     FavoriteId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BeverageId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
+                    FavoriteBeverageId = table.Column<int>(type: "int", nullable: false),
                     Source = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Favorites", x => x.FavoriteId);
-                    table.ForeignKey(
-                        name: "FK_Favorites_Beverages_BeverageId",
-                        column: x => x.BeverageId,
-                        principalTable: "Beverages",
-                        principalColumn: "BeverageId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Favorites_Users_UserId",
                         column: x => x.UserId,
@@ -159,11 +153,12 @@ namespace GraduationProject.Migrations
 
             migrationBuilder.InsertData(
                 table: "Favorites",
-                columns: new[] { "FavoriteId", "BeverageId", "Source", "UserId" },
+                columns: new[] { "FavoriteId", "FavoriteBeverageId", "Source", "UserId" },
                 values: new object[,]
                 {
                     { 1, 1, 0, 1 },
-                    { 2, 2, 0, 2 }
+                    { 2, 2, 0, 2 },
+                    { 3, 11000, 1, 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -175,11 +170,6 @@ namespace GraduationProject.Migrations
                 name: "IX_BeverageIngredients_IngredientId",
                 table: "BeverageIngredients",
                 column: "IngredientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Favorites_BeverageId",
-                table: "Favorites",
-                column: "BeverageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Favorites_UserId",
@@ -197,10 +187,10 @@ namespace GraduationProject.Migrations
                 name: "Favorites");
 
             migrationBuilder.DropTable(
-                name: "Ingredients");
+                name: "Beverages");
 
             migrationBuilder.DropTable(
-                name: "Beverages");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
                 name: "Users");

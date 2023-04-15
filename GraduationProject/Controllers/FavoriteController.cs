@@ -98,7 +98,7 @@ namespace GraduationProject.Controllers
         [HttpPost]
         public async Task<ActionResult<Favorite>> PostFavorite(Favorite favorite)
         {
-            if (favorite.Beverage.Source == BeverageSource.CocktailDB || favorite.Beverage.Source == BeverageSource.Local)
+            if (favorite.Source == BeverageSource.CocktailDB || favorite.Source == BeverageSource.Local)
             
             { _context.Favorites.Add(favorite);
             await _context.SaveChangesAsync();
