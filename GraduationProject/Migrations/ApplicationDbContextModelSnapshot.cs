@@ -156,6 +156,20 @@ namespace GraduationProject.Migrations
                             BeverageId = 1,
                             IngredientId = 3,
                             Measurment = "35ml"
+                        },
+                        new
+                        {
+                            BeverageIngredientId = 4,
+                            BeverageId = 2,
+                            IngredientId = 2,
+                            Measurment = "One Slice"
+                        },
+                        new
+                        {
+                            BeverageIngredientId = 5,
+                            BeverageId = 2,
+                            IngredientId = 3,
+                            Measurment = "35ml"
                         });
                 });
 

@@ -148,7 +148,9 @@ namespace GraduationProject.Migrations
                 {
                     { 1, 1, 1, "60ml" },
                     { 2, 1, 2, "One Slice" },
-                    { 3, 1, 3, "35ml" }
+                    { 3, 1, 3, "35ml" },
+                    { 4, 2, 2, "One Slice" },
+                    { 5, 2, 3, "35ml" }
                 });
 
             migrationBuilder.InsertData(

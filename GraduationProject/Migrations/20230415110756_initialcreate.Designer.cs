@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230414140708_initialcreate")]
+    [Migration("20230415110756_initialcreate")]
     partial class initialcreate
     {
         /// <inheritdoc />
@@ -157,6 +157,20 @@ namespace GraduationProject.Migrations
                         {
                             BeverageIngredientId = 3,
                             BeverageId = 1,
+                            IngredientId = 3,
+                            Measurment = "35ml"
+                        },
+                        new
+                        {
+                            BeverageIngredientId = 4,
+                            BeverageId = 2,
+                            IngredientId = 2,
+                            Measurment = "One Slice"
+                        },
+                        new
+                        {
+                            BeverageIngredientId = 5,
+                            BeverageId = 2,
                             IngredientId = 3,
                             Measurment = "35ml"
                         });
