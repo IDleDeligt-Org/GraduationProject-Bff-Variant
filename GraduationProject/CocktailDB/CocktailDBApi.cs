@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Reflection;
 using GraduationProject.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GraduationProject.CocktailDB
 {
@@ -21,17 +22,7 @@ namespace GraduationProject.CocktailDB
             if(response.IsSuccessStatusCode)
             {
                 BeveragesApiResponse? result = await response.Content.ReadFromJsonAsync<BeveragesApiResponse>();
-
-                List<Beverage> beverages = new List<Beverage>() { };
-
-                if(result?.drinks != null) {
-                    foreach (BeverageApiResponse apiDrink in result?.drinks!)
-                    {
-                        beverages.Add(DrinkMapper.DrinkToBeverage(apiDrink));
-                    }
-                }
-              
-                return beverages;
+                return BeverageApiResponseToBeverage(result!);
             }
             else
             {
@@ -60,5 +51,19 @@ namespace GraduationProject.CocktailDB
             }
         }
 
+
+        public List<Beverage> BeverageApiResponseToBeverage(BeveragesApiResponse beveragesApiResponse)
+        {
+            List<Beverage> beverages = new List<Beverage>() { };
+
+            if (beveragesApiResponse?.drinks != null)
+            {
+                foreach (BeverageApiResponse apiDrink in beveragesApiResponse?.drinks!)
+                {
+                    beverages.Add(DrinkMapper.DrinkToBeverage(apiDrink));
+                }
+            }
+            return beverages;
+        }
     }
 }
