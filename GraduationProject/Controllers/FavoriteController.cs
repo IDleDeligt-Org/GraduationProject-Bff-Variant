@@ -80,21 +80,6 @@ namespace GraduationProject.Controllers
         }
 
 
-        //[HttpPut("{id}")]
-        //public IActionResult PutUser(int id, User user)
-        //{
-        //    if (id != user.UserId)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(user).State = EntityState.Modified;
-        //    _context.SaveChanges();
-
-        //    return NoContent();
-        //}
-
-
         [HttpPost]
         public async Task<ActionResult<Favorite>> PostFavorite(Favorite favorite)
         {
