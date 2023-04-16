@@ -47,7 +47,9 @@ namespace GraduationProject
             modelBuilder.Entity<BeverageIngredient>().HasData(
                 new BeverageIngredient { BeverageIngredientId = 1, BeverageId = 1, IngredientId = 1, Measurment = "60ml" },
                 new BeverageIngredient { BeverageIngredientId = 2, BeverageId = 1, IngredientId = 2, Measurment = "One Slice" },
-                new BeverageIngredient { BeverageIngredientId = 3, BeverageId = 1, IngredientId = 3, Measurment = "35ml" }
+                new BeverageIngredient { BeverageIngredientId = 3, BeverageId = 1, IngredientId = 3, Measurment = "35ml" },
+                new BeverageIngredient { BeverageIngredientId = 4, BeverageId = 2, IngredientId = 2, Measurment = "One Slice" },
+                new BeverageIngredient { BeverageIngredientId = 5, BeverageId = 2, IngredientId = 3, Measurment = "35ml" }
             );
 
             base.OnModelCreating(modelBuilder);

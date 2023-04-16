@@ -47,7 +47,10 @@ namespace GraduationProject.Controllers
             {
                 if (favorite.Source == BeverageSource.Local)
                 {
-                    Beverage? localBeverage = await _context.Beverages.FindAsync(favorite.FavoriteBeverageId);
+                    Beverage? localBeverage = await _context.Beverages
+               .Include(b => b.BeverageIngredients)
+               .ThenInclude(bi => bi.Ingredient)
+               .FirstOrDefaultAsync(b => b.BeverageId == favorite.FavoriteBeverageId);
                     if (localBeverage != null)
                     {
                         fullListFavorites.Add(localBeverage);
