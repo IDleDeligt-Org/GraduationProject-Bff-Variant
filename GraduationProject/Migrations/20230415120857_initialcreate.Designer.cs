@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230415110756_initialcreate")]
+    [Migration("20230415120857_initialcreate")]
     partial class initialcreate
     {
         /// <inheritdoc />
@@ -281,20 +281,9 @@ namespace GraduationProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
 
@@ -304,15 +293,11 @@ namespace GraduationProject.Migrations
                         new
                         {
                             UserId = 1,
-                            Email = "kickass@gmail.com",
-                            Password = "NinjaKick",
                             UserName = "ChuckNorris"
                         },
                         new
                         {
                             UserId = 2,
-                            Email = "iiiiiijjjaaa@hotmail.com",
-                            Password = "RoundHouseKick",
                             UserName = "BruceLee"
                         });
                 });

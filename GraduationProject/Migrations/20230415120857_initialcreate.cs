@@ -55,9 +55,7 @@ namespace GraduationProject.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -134,11 +132,11 @@ namespace GraduationProject.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Email", "Password", "UserName" },
+                columns: new[] { "UserId", "UserName" },
                 values: new object[,]
                 {
-                    { 1, "kickass@gmail.com", "NinjaKick", "ChuckNorris" },
-                    { 2, "iiiiiijjjaaa@hotmail.com", "RoundHouseKick", "BruceLee" }
+                    { 1, "ChuckNorris" },
+                    { 2, "BruceLee" }
                 });
 
             migrationBuilder.InsertData(

@@ -98,23 +98,26 @@ namespace GraduationProject.Controllers
         //}
 
 
-        [HttpPost]
-        public async Task<ActionResult<Favorite>> PostFavorite(Favorite favorite)
+        [HttpPost("user/{userId}")]
+        public async Task<ActionResult<Favorite>> PostFavorite(int userId, Favorite favorite)
         {
             if (favorite.Source == BeverageSource.CocktailDB || favorite.Source == BeverageSource.Local)
-            
-            { _context.Favorites.Add(favorite);
-            await _context.SaveChangesAsync();
+            {
+                favorite.UserId = userId;
+                _context.Favorites.Add(favorite);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetUserFavorites), new { userId = favorite.UserId }, favorite);
+                return CreatedAtAction(nameof(GetUserFavorites), new { userId = favorite.UserId }, favorite);
             }
-        else
-    
-        return BadRequest("Invalid beverage source.");
+            else
+            {
+                return BadRequest("Invalid beverage source.");
+            }
         }
 
 
-    [HttpDelete("{id}")]
+
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFavorite(int id)
         {
             Favorite? favorite = await _context.Favorites.FindAsync(id);

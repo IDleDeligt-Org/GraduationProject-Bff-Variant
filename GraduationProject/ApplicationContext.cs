@@ -22,8 +22,8 @@ namespace GraduationProject
         {
 
             modelBuilder.Entity<User>().HasData(
-                 new User { UserId = 1, UserName = "ChuckNorris", Password = "NinjaKick", Email = "kickass@gmail.com" },
-                 new User { UserId = 2, UserName = "BruceLee", Password = "RoundHouseKick", Email = "iiiiiijjjaaa@hotmail.com" }
+                 new User { UserId = 1, UserName = "ChuckNorris" },
+                 new User { UserId = 2, UserName = "BruceLee" }
              );
 
             modelBuilder.Entity<Favorite>().HasData(
