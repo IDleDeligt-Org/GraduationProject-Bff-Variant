@@ -5,7 +5,16 @@ using System.IO;
 
 namespace GraduationProject
 {
-    public class ApplicationDbContext : DbContext
+    public interface IApplicationDbContext
+    {
+        DbSet<User> Users { get; set; }
+        DbSet<Beverage> Beverages { get; set; }
+        DbSet<Ingredient> Ingredients { get; set; }
+        DbSet<Favorite> Favorites { get; set; }
+        DbSet<BeverageIngredient> BeverageIngredients { get; set; }
+    }
+
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
