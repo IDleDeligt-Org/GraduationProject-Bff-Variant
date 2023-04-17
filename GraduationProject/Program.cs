@@ -1,3 +1,4 @@
+using GraduationProject;
 using GraduationProject.CocktailDB;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -13,7 +14,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
-builder.Services.AddDbContext<GraduationProject.ApplicationDbContext>(options =>
+builder.Services.AddDbContext<IApplicationDbContext, GraduationProject.ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });

@@ -11,10 +11,10 @@ namespace GraduationProject.Controllers
     [ApiController]
     public class BeverageController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ICocktailDBApi _cocktail;
 
-        public BeverageController(ApplicationDbContext context, ICocktailDBApi cocktailDBApi)
+        public BeverageController(IApplicationDbContext context, ICocktailDBApi cocktailDBApi)
         {
             _context = context;
             _cocktail = cocktailDBApi;
