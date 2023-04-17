@@ -4,6 +4,7 @@ using GraduationProject.CocktailDB;
 using GraduationProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GraduationProject.Controllers
 {
@@ -43,7 +44,7 @@ namespace GraduationProject.Controllers
             return Ok(results);
         }
 
-        
+
 
         //[HttpGet("{name}")]
         //public async Task<IActionResult> GetBeverages(string name)
@@ -141,6 +142,48 @@ namespace GraduationProject.Controllers
         //    return NoContent();
         //}
 
+        [HttpPost]
+        public async Task<ActionResult<Beverage>> PostBeverage(Beverage beverage)
+        {
+            _context.Beverages.Add(beverage);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetBeverage), new { id = beverage.BeverageId }, beverage);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBeverage(int id)
+        {
+            var beverage = await _context.Beverages.FindAsync(id);
+            if (beverage == null)
+            {
+                return NotFound();
+            }
+
+            _context.Beverages.Remove(beverage);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutBeverage(int id, Beverage beverage)
+        {
+            if (id != beverage.BeverageId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(beverage).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
+
+
+
+
+
+
 
