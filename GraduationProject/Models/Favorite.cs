@@ -15,7 +15,6 @@ namespace GraduationProject.Models
 
 
         //Navigation Properties
-        
         public virtual User User { get; set; }
         
        

@@ -10,7 +10,7 @@ namespace GraduationProject.Models
         public int IngredientId { get; set; }
 
         [Required(ErrorMessage = "Please enter the mesurments for the ingredient")]
-        public string Measurment { get; set; }
+        public string Measurment { get; set; } = string.Empty;
 
 
         //Navigation Properties

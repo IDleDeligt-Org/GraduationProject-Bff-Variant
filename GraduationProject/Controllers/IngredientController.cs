@@ -12,13 +12,15 @@ namespace GraduationProject.Controllers
     [ApiController]
     public class IngredientController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _applicationDbContext;
         private readonly ICocktailDBApi _cocktail;
+        private readonly ApplicationDbContext _context;
 
-        public IngredientController(ApplicationDbContext context, ICocktailDBApi cocktailDBApi)
+        public IngredientController(IApplicationDbContext context, ICocktailDBApi cocktailDBApi)
         {
-            _context = context;
+            _applicationDbContext = context;
             _cocktail = cocktailDBApi;
+            _context = (ApplicationDbContext)context;
         }
 
         [HttpGet("{search}")]
@@ -26,7 +28,7 @@ namespace GraduationProject.Controllers
         {
             var localResults = await _context.Beverages
                 .Where(b => b.BeverageIngredients
-                .Any(bi => bi.Ingredient.Name == search))
+                .Any(bi => bi.Ingredient.Name.Contains(search)))
                 .Include(b => b.BeverageIngredients)
                 .ThenInclude(bi => bi.Ingredient)
                 .ToListAsync();
@@ -47,62 +49,30 @@ namespace GraduationProject.Controllers
             return Ok(results);
         }
 
+        [HttpGet("/non_alcoholic")]
+        public async Task<IActionResult> GetBeveragesNonAlcoholic()
+        {
+            var localResults = await _context.Beverages
+                .Where(b => b.Alcohol == false)
+                .Include(b => b.BeverageIngredients)
+                .ThenInclude(bi => bi.Ingredient)
+                .ToListAsync();
 
-        //[HttpGet]
-        //public ActionResult<IEnumerable<Ingredient>> GetIngredients()
-        //{
-        //    return _context.Ingredients.ToList();
-        //}
+            List<Beverage> apiResults = await _cocktail.GetAllNonAlcoholicDrinks();
 
-        //[HttpGet("{id}")]
-        //public ActionResult<Ingredient> GetIngredient(int id)
-        //{
-        //    var ingredient = _context.Ingredients.Find(id);
+            if (localResults == null)
+            {
+                return Ok(apiResults);
+            }
+            // Combine and return results
+            var results = localResults.Concat(apiResults).ToList();
 
-        //    if (ingredient == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (results.Count == 0)
+            {
+                return NotFound();
+            }
 
-        //    return ingredient;
-        //}
-
-        //[HttpPut("{id}")]
-        //public IActionResult PutIngredient(int id, Ingredient ingredient)
-        //{
-        //    if (id != ingredient.IngredientId)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(ingredient).State = EntityState.Modified;
-        //    _context.SaveChanges();
-
-        //    return NoContent();
-        //}
-
-        //[HttpPost]
-        //public ActionResult<Ingredient> PostIngredient(Ingredient ingredient)
-        //{
-        //    _context.Ingredients.Add(ingredient);
-        //    _context.SaveChanges();
-
-        //    return CreatedAtAction(nameof(GetIngredient), new { id = ingredient.IngredientId }, ingredient);
-        //}
-
-        //[HttpDelete("{id}")]
-        //public IActionResult DeleteIngredient(int id)
-        //{
-        //    var ingredient = _context.Ingredients.Find(id);
-        //    if (ingredient == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Ingredients.Remove(ingredient);
-        //    _context.SaveChanges();
-
-        //    return NoContent();
-        //}
+            return Ok(results);
+        }
     }
 }

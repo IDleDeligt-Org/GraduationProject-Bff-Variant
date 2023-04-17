@@ -12,13 +12,15 @@ namespace GraduationProject.Controllers
     [ApiController]
     public class FavoriteController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _applicationDbContext;
         private readonly ICocktailDBApi _cocktail;
+        private readonly ApplicationDbContext _context;
 
-        public FavoriteController(ApplicationDbContext context, ICocktailDBApi cocktailDBApi)
+        public FavoriteController(IApplicationDbContext context, ICocktailDBApi cocktailDBApi)
         {
-            _context = context;
+            _applicationDbContext = context;
             _cocktail = cocktailDBApi;
+            _context = (ApplicationDbContext)context;
         }
 
         [HttpGet("user/{userId}")]
@@ -41,7 +43,7 @@ namespace GraduationProject.Controllers
             }
 
            
-            List<Beverage> fullListFavorites = new List<Beverage>();
+            List<Beverage> fullListFavorites = new();
 
             foreach (Favorite favorite in userFavorites)
             {

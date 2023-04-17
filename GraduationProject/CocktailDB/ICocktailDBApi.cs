@@ -8,6 +8,6 @@ namespace GraduationProject.CocktailDB
         Task<List<Beverage>> GetBeveragesByName(string search);
         Task<Beverage> GetBeverageById(int id);
         Task<List<Beverage>> GetBeveragesByIngredient(string search);
-        Task<List<Ingredient>> GetAllIngredients();
+        Task<List<Beverage>> GetAllNonAlcoholicDrinks();
     }
 }
