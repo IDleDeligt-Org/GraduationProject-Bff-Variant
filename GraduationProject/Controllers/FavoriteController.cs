@@ -101,12 +101,24 @@ namespace GraduationProject.Controllers
 
 
         [HttpPost("user/{userId}")]
-        public async Task<ActionResult<Favorite>> PostFavorite(int userId, Favorite favorite)
+        public async Task<ActionResult<FavoriteDto>> PostFavorite(int userId, FavoriteDto favorite)
         {
             if (favorite.Source == BeverageSource.CocktailDB || favorite.Source == BeverageSource.Local)
             {
-                favorite.UserId = userId;
-                _context.Favorites.Add(favorite);
+                var user = await _context.Users.FindAsync(userId);
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+                var newFavorite = new Favorite{
+                    FavoriteBeverageId = favorite.FavoriteBeverageId,
+                    Source = favorite.Source,
+                    User = user,
+                    UserId = userId
+                };
+
+                _context.Favorites.Add(newFavorite);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetUserFavorites), new { userId = favorite.UserId }, favorite);
@@ -116,6 +128,8 @@ namespace GraduationProject.Controllers
                 return BadRequest("Invalid beverage source.");
             }
         }
+
+
 
 
 
