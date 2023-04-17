@@ -21,7 +21,7 @@ namespace GraduationProject.Controllers
         }
 
         [HttpGet("{search}")]
-        public async Task<IActionResult> GetBeverages(string search)
+        public async Task<IActionResult> GetBeveragesByName(string search)
         {
             // Query local database
             var localResults = await _context.Beverages
@@ -31,7 +31,7 @@ namespace GraduationProject.Controllers
                 .ToListAsync();
 
             // Query third-party API
-            var apiResults = await _cocktail.GetBeverages(search);
+            var apiResults = await _cocktail.GetBeveragesByName(search);
 
             if (localResults == null)
             {
@@ -43,6 +43,7 @@ namespace GraduationProject.Controllers
             return Ok(results);
         }
 
+        
 
         //[HttpGet("{name}")]
         //public async Task<IActionResult> GetBeverages(string name)

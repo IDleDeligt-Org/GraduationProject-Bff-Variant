@@ -21,6 +21,7 @@ builder.Services.AddHttpClient<ICocktailDBApi, CocktailDBApi>(httpClient =>
 {
     httpClient.BaseAddress = new Uri("https://www.thecocktaildb.com");
 });
+builder.Services.AddCors();
 
 // Register the Swagger generator
 builder.Services.AddSwaggerGen(c =>
@@ -36,6 +37,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+
 }
 
 app.UseHttpsRedirection();
@@ -44,6 +46,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// Må egentlig konfigureres til spesifik access <----------
+app.UseCors(c =>{ c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
 
 // Add the Swagger middleware for serving the generated JSON document and Swagger UI
 app.UseSwagger();

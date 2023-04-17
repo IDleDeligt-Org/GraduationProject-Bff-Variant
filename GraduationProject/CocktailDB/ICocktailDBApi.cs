@@ -5,7 +5,9 @@ namespace GraduationProject.CocktailDB
 {
     public interface ICocktailDBApi
     {
-        Task<List<Beverage>> GetBeverages(string search);
+        Task<List<Beverage>> GetBeveragesByName(string search);
         Task<Beverage> GetBeverageById(int id);
+        Task<List<Beverage>> GetBeveragesByIngredient(string search);
+        Task<List<Ingredient>> GetAllIngredients();
     }
 }

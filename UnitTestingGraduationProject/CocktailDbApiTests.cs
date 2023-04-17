@@ -32,6 +32,7 @@ namespace UnitTestingGraduationProject
             {
                 BaseAddress = new Uri("https://www.thecocktaildb.com")
             };
+
             _api = new CocktailDBApi(_httpClient);
       
             _apiResultsSeveral = new StringContent(JsonConvert.SerializeObject(new BeveragesApiResponse()
@@ -111,7 +112,7 @@ namespace UnitTestingGraduationProject
                 });
 
             // Act
-            var result = await _api.GetBeverages(search);
+            var result = await _api.GetBeveragesByName(search);
 
             // Assert
             Assert.NotNull(result);
@@ -146,7 +147,7 @@ namespace UnitTestingGraduationProject
                  });
 
             //Act
-            var result = await _api.GetBeverages(search);
+            var result = await _api.GetBeveragesByName(search);
 
             //Assert
             Assert.NotNull(result);
@@ -167,7 +168,7 @@ namespace UnitTestingGraduationProject
                 });
 
             //Act
-            var caughtException = await Assert.ThrowsAsync<HttpRequestException>(async () => await _api.GetBeverages(search));
+            var caughtException = await Assert.ThrowsAsync<HttpRequestException>(async () => await _api.GetBeveragesByName(search));
             
             //Assert
             Assert.Equal("Failed to retrieve searchinformation. Status code: ServiceUnavailable", caughtException.Message);

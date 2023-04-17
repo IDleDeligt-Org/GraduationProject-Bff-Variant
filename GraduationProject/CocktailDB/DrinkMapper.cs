@@ -10,8 +10,8 @@ public static class DrinkMapper
         {
             BeverageId = apiDrink.idDrink,
             Name = apiDrink.strDrink,
-            Tag = apiDrink.strCategory,
-            Alcohol = (apiDrink.strAlcoholic.ToLower().Contains("alcohol") ? true : false),
+            Tag = apiDrink.strCategory + (apiDrink.strTags != null ? ", " + apiDrink.strTags : ""),
+            Alcohol = (apiDrink.strAlcoholic.ToLower().Contains("non") ? false : true),
             Glass = apiDrink.strGlass,
             Video = apiDrink.strVideo,
             Instruction = apiDrink.strInstructions,
@@ -44,5 +44,14 @@ public static class DrinkMapper
         }
 
         return beverage;
+    }
+
+    public static Ingredient DrinkToIngredient(BeverageApiResponse apiDrink)
+    {
+        Ingredient ingredient = new()
+        {
+            Name = apiDrink.strIngredient1,
+        };
+        return ingredient;
     }
 }
