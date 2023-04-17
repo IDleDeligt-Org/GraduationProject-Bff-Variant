@@ -2,6 +2,10 @@ using GraduationProject;
 using GraduationProject.CocktailDB;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +23,12 @@ builder.Services.AddHttpClient<ICocktailDBApi, CocktailDBApi>(httpClient =>
     httpClient.BaseAddress = new Uri("https://www.thecocktaildb.com");
 });
 builder.Services.AddCors();
+
+// Register the Swagger generator
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+});
 
 var app = builder.Build();
 
@@ -40,6 +50,15 @@ app.UseAuthorization();
 
 // Må egentlig konfigureres til spesifik access <----------
 app.UseCors(c =>{ c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
+
+// Add the Swagger middleware for serving the generated JSON document and Swagger UI
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    // Serve the Swagger UI at the app's root (http://localhost:<port>/)
+    c.RoutePrefix = string.Empty;
+});
 
 app.MapControllers();
 app.Run();

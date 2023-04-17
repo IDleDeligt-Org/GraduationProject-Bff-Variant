@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,12 +7,14 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Moq.EntityFrameworkCore" Version="7.0.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,5 +29,14 @@
   <ItemGroup>
     <ProjectReference Include="..\GraduationProject\GraduationProject.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="..\GraduationProject\bin\Debug\net7.0\testhost.deps.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="..\GraduationProject\bin\Debug\net7.0\testhost.deps.json" />
+  </ItemGroup>
+
 
 </Project>
