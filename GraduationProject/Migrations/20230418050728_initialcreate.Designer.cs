@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230417121426_removeNavProperty")]
-    partial class removeNavProperty
+    [Migration("20230418050728_initialcreate")]
+    partial class initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,7 +126,7 @@ namespace GraduationProject.Migrations
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Measurment")
+                    b.Property<string>("Measurement")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -144,35 +144,35 @@ namespace GraduationProject.Migrations
                             BeverageIngredientId = 1,
                             BeverageId = 1,
                             IngredientId = 1,
-                            Measurment = "60ml"
+                            Measurement = "60ml"
                         },
                         new
                         {
                             BeverageIngredientId = 2,
                             BeverageId = 1,
                             IngredientId = 2,
-                            Measurment = "One Slice"
+                            Measurement = "One Slice"
                         },
                         new
                         {
                             BeverageIngredientId = 3,
                             BeverageId = 1,
                             IngredientId = 3,
-                            Measurment = "35ml"
+                            Measurement = "35ml"
                         },
                         new
                         {
                             BeverageIngredientId = 4,
                             BeverageId = 2,
                             IngredientId = 2,
-                            Measurment = "One Slice"
+                            Measurement = "One Slice"
                         },
                         new
                         {
                             BeverageIngredientId = 5,
                             BeverageId = 2,
                             IngredientId = 3,
-                            Measurment = "35ml"
+                            Measurement = "35ml"
                         });
                 });
 

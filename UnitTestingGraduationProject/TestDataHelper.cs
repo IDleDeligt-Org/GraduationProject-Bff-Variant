@@ -34,7 +34,7 @@ namespace UnitTestingGraduationProject
                                 Description = "A citrus fruit with sour juice.",
                                 Image = "https://example.com/lemon.jpg"
                             },
-                            Measurment = "1/2 oz",
+                            Measurement = "1/2 oz",
                             }
                     },
                     Source = BeverageSource.Local,
@@ -59,7 +59,7 @@ namespace UnitTestingGraduationProject
                                     Description = "A type of tea that is more oxidized than green, white, and oolong teas.",
                                     Image = "https://example.com/black-tea.jpg"
                                 },
-                                Measurment = "8 oz",
+                                Measurement = "8 oz",
                             }
                         },
                         Source = BeverageSource.Local
@@ -84,7 +84,7 @@ namespace UnitTestingGraduationProject
                                     Description = "A distilled spirit made from the blue agave plant.",
                                     Image = "https://example.com/tequila.jpg"
                                 },
-                                Measurment = "2 oz",
+                                Measurement = "2 oz",
                             }
                         },
                         Source = BeverageSource.Local
@@ -115,7 +115,7 @@ namespace UnitTestingGraduationProject
                                     Description = "A herb with a refreshing, cool taste.",
                                     Image = "https://example.com/mint.jpg"
                                 },
-                                Measurment = "10 leaves",
+                                Measurement = "10 leaves",
                             }
                         },
                         Source = BeverageSource.CocktailDB
@@ -140,7 +140,7 @@ namespace UnitTestingGraduationProject
                                     Description = "A distilled spirit made from the blue agave plant.",
                                     Image = "https://example.com/tequila.jpg"
                                 },
-                                Measurment = "2 oz",
+                                Measurement = "2 oz",
                             }
                         },
                         Source = BeverageSource.CocktailDB

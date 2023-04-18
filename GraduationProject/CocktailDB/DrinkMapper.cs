@@ -39,7 +39,7 @@ public static class DrinkMapper
                     Name = ingredientName,
                     
                 },
-                Measurment = ingredientMeasure,
+                Measurement = ingredientMeasure,
             });
         }
 

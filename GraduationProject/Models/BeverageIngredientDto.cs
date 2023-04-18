@@ -2,19 +2,21 @@
 
 namespace GraduationProject.Models
 {
-    public class BeverageIngredient
+    public class BeverageIngredientDto
     {
-
         public int BeverageIngredientId { get; set; }
         public int BeverageId { get; set; }
         public int IngredientId { get; set; }
 
-        [Required(ErrorMessage = "Please enter the mesurments for the ingredient")]
+        [Required]
         public string Measurement { get; set; }
 
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
 
-        //Navigation Properties
-        public virtual Beverage Beverage { get; set; }
-        public virtual Ingredient Ingredient { get; set; }
+        [Required]
+        public IngredientDto Ingredient { get; set; }
     }
 }
+

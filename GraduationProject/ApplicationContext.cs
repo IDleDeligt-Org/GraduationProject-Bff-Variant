@@ -1,5 +1,6 @@
 ﻿using GraduationProject.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
@@ -7,6 +8,7 @@ namespace GraduationProject
 {
     public interface IApplicationDbContext
     {
+
         DbSet<User> Users { get; set; }
         DbSet<Beverage> Beverages { get; set; }
         DbSet<Ingredient> Ingredients { get; set; }
@@ -54,11 +56,11 @@ namespace GraduationProject
             );
 
             modelBuilder.Entity<BeverageIngredient>().HasData(
-                new BeverageIngredient { BeverageIngredientId = 1, BeverageId = 1, IngredientId = 1, Measurment = "60ml" },
-                new BeverageIngredient { BeverageIngredientId = 2, BeverageId = 1, IngredientId = 2, Measurment = "One Slice" },
-                new BeverageIngredient { BeverageIngredientId = 3, BeverageId = 1, IngredientId = 3, Measurment = "35ml" },
-                new BeverageIngredient { BeverageIngredientId = 4, BeverageId = 2, IngredientId = 2, Measurment = "One Slice" },
-                new BeverageIngredient { BeverageIngredientId = 5, BeverageId = 2, IngredientId = 3, Measurment = "35ml" }
+                new BeverageIngredient { BeverageIngredientId = 1, BeverageId = 1, IngredientId = 1, Measurement = "60ml" },
+                new BeverageIngredient { BeverageIngredientId = 2, BeverageId = 1, IngredientId = 2, Measurement = "One Slice" },
+                new BeverageIngredient { BeverageIngredientId = 3, BeverageId = 1, IngredientId = 3, Measurement = "35ml" },
+                new BeverageIngredient { BeverageIngredientId = 4, BeverageId = 2, IngredientId = 2, Measurement = "One Slice" },
+                new BeverageIngredient { BeverageIngredientId = 5, BeverageId = 2, IngredientId = 3, Measurement = "35ml" }
             );
 
             base.OnModelCreating(modelBuilder);

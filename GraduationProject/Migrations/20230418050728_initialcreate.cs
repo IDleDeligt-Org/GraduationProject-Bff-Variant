@@ -7,7 +7,7 @@
 namespace GraduationProject.Migrations
 {
     /// <inheritdoc />
-    public partial class removeNavProperty : Migration
+    public partial class initialcreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -70,7 +70,7 @@ namespace GraduationProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BeverageId = table.Column<int>(type: "int", nullable: false),
                     IngredientId = table.Column<int>(type: "int", nullable: false),
-                    Measurment = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Measurement = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,7 +141,7 @@ namespace GraduationProject.Migrations
 
             migrationBuilder.InsertData(
                 table: "BeverageIngredients",
-                columns: new[] { "BeverageIngredientId", "BeverageId", "IngredientId", "Measurment" },
+                columns: new[] { "BeverageIngredientId", "BeverageId", "IngredientId", "Measurement" },
                 values: new object[,]
                 {
                     { 1, 1, 1, "60ml" },

@@ -12,13 +12,15 @@ namespace GraduationProject.Controllers
     [ApiController]
     public class FavoriteController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _applicationdbcontext;
         private readonly ICocktailDBApi _cocktail;
+        private readonly ApplicationDbContext _context;
 
-        public FavoriteController(ApplicationDbContext context, ICocktailDBApi cocktailDBApi)
+        public FavoriteController(IApplicationDbContext context, ICocktailDBApi cocktailDBApi)
         {
-            _context = context;
+            _applicationdbcontext = context;
             _cocktail = cocktailDBApi;
+            _context = (ApplicationDbContext)context;
         }
 
         [HttpGet("user/{userId}")]
@@ -82,22 +84,6 @@ namespace GraduationProject.Controllers
             return user;
         }
 
-
-        //[HttpPut("{id}")]
-        //public IActionResult PutUser(int id, User user)
-        //{
-        //    if (id != user.UserId)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(user).State = EntityState.Modified;
-        //    _context.SaveChanges();
-
-        //    return NoContent();
-        //}
-
-
         [HttpPost("user/{userId}")]
         public async Task<ActionResult<FavoriteDto>> PostFavorite(int userId, FavoriteDto favorite)
         {
@@ -126,10 +112,6 @@ namespace GraduationProject.Controllers
                 return BadRequest("Invalid beverage source.");
             }
         }
-
-
-
-
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFavorite(int id)
