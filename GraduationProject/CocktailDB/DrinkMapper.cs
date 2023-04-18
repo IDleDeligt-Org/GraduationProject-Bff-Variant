@@ -1,23 +1,23 @@
 ﻿using GraduationProject.Models;
 using GraduationProject.Models.CocktailDB;
 
-
 public static class DrinkMapper
 {
+
     public static Beverage DrinkToBeverage(BeverageApiResponse apiDrink)
     {
         Beverage beverage = new()
         {
             BeverageId = apiDrink.idDrink,
-            Name = apiDrink.strDrink,
+            Name = apiDrink.strDrink!,
             Tag = apiDrink.strCategory + (apiDrink.strTags != null ? ", " + apiDrink.strTags : ""),
-            Alcohol = (apiDrink.strAlcoholic.ToLower().Contains("non") ? false : true),
+            Alcohol = (!string.IsNullOrEmpty(apiDrink.strAlcoholic) && apiDrink.strAlcoholic.ToLower().Contains("non")),
             Glass = apiDrink.strGlass,
             Video = apiDrink.strVideo,
-            Instruction = apiDrink.strInstructions,
-            Image = apiDrink.strDrinkThumb,
+            Instruction = apiDrink.strInstructions!,
+            Image = apiDrink.strDrinkThumb!,
             ImageAttribution = apiDrink.strImageAttribution,
-            CreativeCommonsConfirmed = (apiDrink.strCreativeCommonsConfirmed.ToLower() == "yes" ? true : false),
+            CreativeCommonsConfirmed = (!string.IsNullOrEmpty(apiDrink.strCreativeCommonsConfirmed) && apiDrink.strCreativeCommonsConfirmed!.ToLower() == "yes"),
             BeverageIngredients = new List<BeverageIngredient>(),
             Source = BeverageSource.CocktailDB,
         };
@@ -50,7 +50,7 @@ public static class DrinkMapper
     {
         Ingredient ingredient = new()
         {
-            Name = apiDrink.strIngredient1,
+            Name = apiDrink.strIngredient1!,
         };
         return ingredient;
     }

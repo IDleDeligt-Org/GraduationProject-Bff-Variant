@@ -14,13 +14,13 @@ namespace GraduationProject.Controllers
     [ApiController]
     public class BeverageController : ControllerBase
     {
-        private readonly IApplicationDbContext _applicationdbcontext;
+        private readonly IApplicationDbContext _applicationDbContext;
         private readonly ICocktailDBApi _cocktail;
         private readonly ApplicationDbContext _context;
 
         public BeverageController(IApplicationDbContext context, ICocktailDBApi cocktailDBApi)
         {
-            _applicationdbcontext = context;
+            _applicationDbContext = context;
             _cocktail = cocktailDBApi;
             _context = (ApplicationDbContext)context;
         }
@@ -48,6 +48,40 @@ namespace GraduationProject.Controllers
             return Ok(results);
         }
 
+        [HttpGet("/start")]
+        public async Task<IActionResult> GetRandomStartBeverages()
+        {
+            Random randomNumber = new Random();
+            var ginTask = _cocktail.GetBeveragesByIngredient("gin");
+            var rumTask = _cocktail.GetBeveragesByIngredient("rum");
+            var vodkaTask = _cocktail.GetBeveragesByIngredient("vodka");
+            var tequilaTask = _cocktail.GetBeveragesByIngredient("tequila");
+            var whiskeyTask = _cocktail.GetBeveragesByIngredient("whiskey");
+            var nonAlcoholicTask = _cocktail.GetAllNonAlcoholicDrinks();
+
+            await Task.WhenAll(ginTask, rumTask, vodkaTask, tequilaTask, whiskeyTask, nonAlcoholicTask);
+
+            List<Beverage>? ginResults = await ginTask;
+            List<Beverage>? rumResults = await rumTask;
+            List<Beverage>? vodkaResults = await vodkaTask;
+            List<Beverage>? tequilaResults = await tequilaTask;
+            List<Beverage>? whiskeyResults = await whiskeyTask;
+            List<Beverage>? nonAlcoholicResults = await nonAlcoholicTask;
+
+
+
+            List<Beverage> randomResults = new()
+            {
+                ginResults[randomNumber.Next(0, ginResults.Count-1)],
+                rumResults[randomNumber.Next(0,rumResults.Count-1)],
+                vodkaResults[randomNumber.Next(0, vodkaResults.Count - 1)],
+                tequilaResults[randomNumber.Next(0, vodkaResults.Count - 1)],
+                whiskeyResults[randomNumber.Next(0,whiskeyResults.Count - 1)],
+                nonAlcoholicResults[randomNumber.Next(0, nonAlcoholicResults.Count - 1)]
+            };
+
+            return Ok(randomResults);
+        }
 
 
         //[HttpGet("{name}")]

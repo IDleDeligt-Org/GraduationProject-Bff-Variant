@@ -23,9 +23,9 @@ namespace UnitTestingGraduationProject
 {
     public class BeverageControllerTests
     {
-        private Mock<IApplicationDbContext> _mockDbContext;
-        private BeverageController _controller;
-        private Mock<ICocktailDBApi> _mockCocktailApi;
+        private readonly Mock<IApplicationDbContext> _mockDbContext;
+        private readonly BeverageController _controller;
+        private readonly Mock<ICocktailDBApi> _mockCocktailApi;
 
         public BeverageControllerTests()
         {
@@ -69,7 +69,7 @@ namespace UnitTestingGraduationProject
             var okResult = Assert.IsType<OkObjectResult>(result);
             var beverages = Assert.IsAssignableFrom<List<Beverage>>(okResult.Value);
 
-            Assert.Equal(1, beverages.Count);
+            Assert.Single(beverages);
         }
 
         [Fact]

@@ -11,7 +11,7 @@ namespace GraduationProject.CocktailDB
     public class CocktailDBApi : ICocktailDBApi
     {
         private readonly HttpClient _httpClient;
-        private IngredientsList _ingredientsList = new();
+        private readonly IngredientsList _ingredientsList = new();
 
         public CocktailDBApi(HttpClient client)
         {
@@ -25,7 +25,7 @@ namespace GraduationProject.CocktailDB
             if(response.IsSuccessStatusCode)
             {
                 BeveragesApiResponse? result = await response.Content.ReadFromJsonAsync<BeveragesApiResponse>();
-                List<Beverage> beverages = new List<Beverage>() { };
+                List<Beverage> beverages = new();
 
                 if (result?.drinks != null)
                 {
@@ -65,7 +65,7 @@ namespace GraduationProject.CocktailDB
 
         public async Task<List<Beverage>> GetBeveragesByIngredient(string search)
         {
-            if(_ingredientsList.CheckIngredient(search))
+            try
             {
                 HttpResponseMessage? response = await _httpClient.GetAsync($"api/json/v1/1/filter.php?i={search}");
 
@@ -85,31 +85,33 @@ namespace GraduationProject.CocktailDB
                 }
                 else
                 {
-                    throw new HttpRequestException($"Failed to retrieve searchinformation. Status code: {response.StatusCode}");
+                    return new List<Beverage>();
                 }
             }
-
-            else {
+            catch(Exception e) {
+                Console.WriteLine($"Failed to retrieve search information: {e}");
                 return new List<Beverage>();
-            }
+            };
         }
 
-        public async Task<List<Ingredient>> GetAllIngredients()
+       
+        public async Task<List<Beverage>> GetAllNonAlcoholicDrinks()
         {
 
-            HttpResponseMessage? response = await _httpClient.GetAsync($"api/json/v1/1/list.php?i=list");
+            HttpResponseMessage? response = await _httpClient.GetAsync($"api/json/v1/1/filter.php?a=Non_Alcoholic");
             if (response.IsSuccessStatusCode)
             {
-                BeveragesApiResponse? result = await response.Content.ReadFromJsonAsync<BeveragesApiResponse> ();
-                List<Ingredient> ingredients = new();
-                if(result?.drinks != null)
+                BeveragesApiResponse? result = await response.Content.ReadFromJsonAsync<BeveragesApiResponse>();
+                List<Beverage> beverages = new();
+                if (result?.drinks != null)
                 {
-                    foreach (BeverageApiResponse apiDrink in result?.drinks!)
-                    {
-                        ingredients.Add(DrinkMapper.DrinkToIngredient(apiDrink));
+                    foreach(BeverageApiResponse beverageApiResponse in result.drinks)
+                        {
+                        Beverage beverage = await GetBeverageById(beverageApiResponse.idDrink);
+                        beverages.Add(beverage);
                     }
                 }
-                return ingredients;
+                return beverages;
             }
 
             else
@@ -117,6 +119,5 @@ namespace GraduationProject.CocktailDB
                 throw new HttpRequestException($"Failed to retrieve searchinformation. Status code: {response.StatusCode}");
             }
         }
-        
     }
 }

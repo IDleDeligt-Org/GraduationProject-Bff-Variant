@@ -94,7 +94,7 @@ namespace UnitTestingGraduationProject
 
         public static Task<List<Beverage>> GetFakeListBeveragesFromApi()
         {
-            List<Beverage> beverages = new List<Beverage>{
+            List<Beverage> beverages = new(){
                 new Beverage
                     {
                         BeverageId = 4,
@@ -151,8 +151,7 @@ namespace UnitTestingGraduationProject
 
         public static Task<List<Beverage>> GetFakeListWithNoBeveragesFromApi()
         {
-            List<Beverage> beverages = new List<Beverage>{
-            };
+            List<Beverage> beverages = new();
             return Task.FromResult(beverages);
         }
     }

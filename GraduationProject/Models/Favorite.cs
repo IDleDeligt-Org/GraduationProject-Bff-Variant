@@ -12,7 +12,6 @@ namespace GraduationProject.Models
         [Required]
         public BeverageSource Source { get; set; }
         //Navigation Properties
-        
         public virtual User User { get; set; }
     }
 }

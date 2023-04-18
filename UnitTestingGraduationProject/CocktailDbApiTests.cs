@@ -20,11 +20,11 @@ namespace UnitTestingGraduationProject
 {
     public class CocktailDbApiTests
     {
-        private StringContent _apiResultsSeveral;
-        private StringContent _apiResultsOne;
-        private Mock<HttpMessageHandler> _mockMessageHandler = new Mock<HttpMessageHandler>();
-        private HttpClient _httpClient;
-        private CocktailDBApi _api;
+        private readonly StringContent _apiResultsSeveral;
+        private readonly StringContent _apiResultsOne;
+        private readonly Mock<HttpMessageHandler> _mockMessageHandler = new();
+        private readonly HttpClient _httpClient;
+        private readonly CocktailDBApi _api;
 
         public CocktailDbApiTests()
         {
