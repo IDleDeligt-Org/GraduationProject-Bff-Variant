@@ -49,7 +49,7 @@ namespace GraduationProject.Controllers
             return Ok(results);
         }
 
-        [HttpGet("/non_alcoholic")]
+        [HttpGet("search/non_alcoholic")]
         public async Task<IActionResult> GetBeveragesNonAlcoholic()
         {
             var localResults = await _context.Beverages
