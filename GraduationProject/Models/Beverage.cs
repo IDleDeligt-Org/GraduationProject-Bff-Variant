@@ -11,6 +11,7 @@ namespace GraduationProject.Models
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Please enter a description for the beverage")]
+        [StringLength (100, ErrorMessage = "Beverage description cannot be longer than 500 characters")]
         public string? Tag { get; set; } = string.Empty;
 
 
