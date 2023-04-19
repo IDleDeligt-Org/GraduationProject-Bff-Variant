@@ -74,5 +74,12 @@ namespace GraduationProject.Controllers
 
             return Ok(results);
         }
+        
+        [HttpGet("local/all")]
+        public async Task<IActionResult> GetAllIngredients()
+        {
+            var ingredients = await _applicationDbContext.Ingredients.ToListAsync();
+            return Ok(ingredients);
+        }
     }
 }
