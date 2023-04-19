@@ -19,7 +19,7 @@ namespace GraduationProject.Migrations
                     BeverageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Tag = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tag = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Alcohol = table.Column<bool>(type: "bit", nullable: false),
                     Glass = table.Column<int>(type: "int", nullable: false),
                     Instruction = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),

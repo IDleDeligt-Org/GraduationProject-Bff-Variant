@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230419115125_initialcreate")]
+    [Migration("20230419122518_initialcreate")]
     partial class initialcreate
     {
         /// <inheritdoc />
@@ -63,7 +63,8 @@ namespace GraduationProject.Migrations
 
                     b.Property<string>("Tag")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Video")
                         .HasColumnType("nvarchar(max)");
