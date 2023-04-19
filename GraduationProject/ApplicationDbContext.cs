@@ -14,6 +14,8 @@ namespace GraduationProject
         DbSet<Ingredient> Ingredients { get; set; }
         DbSet<Favorite> Favorites { get; set; }
         DbSet<BeverageIngredient> BeverageIngredients { get; set; }
+
+        Task<int> SaveChangesAsync();
     }
 
     public class ApplicationDbContext : DbContext, IApplicationDbContext
@@ -28,6 +30,8 @@ namespace GraduationProject
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<BeverageIngredient> BeverageIngredients { get; set; }
+
+        public Task<int> SaveChangesAsync() => base.SaveChangesAsync();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,9 +48,9 @@ namespace GraduationProject
             );
 
             modelBuilder.Entity<Beverage>().HasData(
-                new Beverage { BeverageId = 1, Name = "Potato Margarita", Tag = "ordinary", Alcohol = true, Instruction = "Shake it like a polaroid picture", Glass = "Martini Glass", Image = "http://potatomargarita.com" },
-                new Beverage { BeverageId = 2, Name = "Tomato Martini", Tag = "cocktail", Alcohol = true, Instruction = "Stir it up", Glass = "Thumbler", Image = "http://tomatomartini.com" },
-                new Beverage { BeverageId = 3, Name = "Brocoli Old Fashioned", Tag = "ordinary", Alcohol = false, Instruction = "On the grind", Glass = "Long glass", Image = "http://brocolioldfashined.com" }
+                new Beverage { BeverageId = 1, Name = "Potato Margarita", Tag = "ordinary", Alcohol = true, Instruction = "Shake it like a polaroid picture", Glass = GlassType.MartiniGlass, Image = "http://potatomargarita.com" },
+                new Beverage { BeverageId = 2, Name = "Tomato Martini", Tag = "cocktail", Alcohol = true, Instruction = "Stir it up", Glass = GlassType.MasonJar, Image = "http://tomatomartini.com" },
+                new Beverage { BeverageId = 3, Name = "Brocoli Old Fashioned", Tag = "ordinary", Alcohol = false, Instruction = "On the grind", Glass = GlassType.CoupeGlass, Image = "http://brocolioldfashined.com" }
             );
 
             modelBuilder.Entity<Ingredient>().HasData(

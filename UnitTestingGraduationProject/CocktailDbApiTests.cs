@@ -119,8 +119,8 @@ namespace UnitTestingGraduationProject
             Assert.Equal(3, result.Count);
             Assert.Equal("Margarita", result[2].Name);
             Assert.Equal(11007, result[2].BeverageId);
-            Assert.Equal("Cocktail", result[0].Glass);
-            Assert.Equal("Unknown", result[1].Glass);
+            Assert.Equal(GlassType.Unknown, result[0].Glass);
+            Assert.Equal(GlassType.Unknown, result[1].Glass);
             Assert.True(result[0].Alcohol);
             Assert.True(result[1].Alcohol);
             Assert.False(result[2].Alcohol);
@@ -192,7 +192,7 @@ namespace UnitTestingGraduationProject
             Assert.Equal("Martini", beverage.Name);
             Assert.Equal("Ordinary Drink", beverage.Tag);
             Assert.True(beverage.Alcohol);
-            Assert.Equal("Cocktail", beverage.Glass);
+            Assert.Equal(GlassType.Unknown, beverage.Glass);
             Assert.Equal("Shake it all about", beverage.Instruction);
             Assert.Equal("http://tomatomartini.com", beverage.Image);
             Assert.Null(beverage.ImageAttribution);
@@ -219,7 +219,7 @@ namespace UnitTestingGraduationProject
             Assert.NotNull(beverage);
             Assert.True(string.IsNullOrEmpty(beverage.Name));
             Assert.True(string.IsNullOrEmpty(beverage.Tag));
-            Assert.True(string.IsNullOrEmpty(beverage.Glass));
+            Assert.Equal(GlassType.HighballGlass, beverage.Glass);
             Assert.True(string.IsNullOrEmpty(beverage.Instruction));
             Assert.True(string.IsNullOrEmpty(beverage.Image));
             Assert.Null(beverage.BeverageIngredients);

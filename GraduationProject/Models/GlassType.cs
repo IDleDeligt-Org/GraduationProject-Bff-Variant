@@ -1,0 +1,40 @@
+﻿namespace GraduationProject.Models
+{
+    public enum GlassType
+    {
+        HighballGlass,
+        CocktailGlass,
+        OldFashionedGlass,
+        WhiskeyGlass,
+        CollinsGlass,
+        PousseCafeGlass,
+        ChampagneFlute,
+        WhiskeySourGlass,
+        CordialGlass,
+        BrandySnifter,
+        WhiteWineGlass,
+        NickAndNoraGlass,
+        HurricaneGlass,
+        CoffeeMug,
+        ShotGlass,
+        Jar,
+        IrishCoffeeCup,
+        PunchBowl,
+        Pitcher,
+        PintGlass,
+        CopperMug,
+        WineGlass,
+        BeerMug,
+        MargaritaCoupetteGlass,
+        BeerPilsner,
+        BeerGlass,
+        ParfaitGlass,
+        MasonJar,
+        MargaritaGlass,
+        MartiniGlass,
+        BalloonGlass,
+        CoupeGlass,
+        Unknown
+    }
+
+}

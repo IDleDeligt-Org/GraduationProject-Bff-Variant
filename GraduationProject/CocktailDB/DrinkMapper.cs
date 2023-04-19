@@ -10,9 +10,9 @@ public static class DrinkMapper
             BeverageId = apiDrink.idDrink,
             Name = apiDrink.strDrink!,
             Tag = apiDrink.strCategory + (apiDrink.strTags != null ? ", " + apiDrink.strTags : ""),
-            Alcohol = (!string.IsNullOrEmpty(apiDrink.strAlcoholic) 
-                       && apiDrink.strAlcoholic.ToLower().Contains("non")),
-            Glass = apiDrink.strGlass,
+            Alcohol = (!string.IsNullOrEmpty(apiDrink.strAlcoholic)
+                       && !apiDrink.strAlcoholic.ToLower().Contains("non")),
+            Glass = ParseGlassType(apiDrink.strGlass),
             Video = apiDrink.strVideo,
             Instruction = apiDrink.strInstructions!,
             Image = apiDrink.strDrinkThumb!,
@@ -48,7 +48,6 @@ public static class DrinkMapper
 
         return beverage;
     }
-
     public static Ingredient DrinkToIngredient(BeverageApiResponse apiDrink)
     {
         Ingredient ingredient = new()
@@ -56,5 +55,16 @@ public static class DrinkMapper
             Name = apiDrink.strIngredient1!,
         };
         return ingredient;
+    }
+    public static GlassType ParseGlassType(string? glass)
+    {
+        if (string.IsNullOrEmpty(glass))
+        {
+            return GlassType.Unknown;
+        }
+
+        return Enum.TryParse(glass.Replace(" ", "_"), true, out GlassType glassType)
+            ? glassType
+            : GlassType.Unknown;
     }
 }

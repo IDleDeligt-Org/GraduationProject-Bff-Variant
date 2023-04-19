@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230418050728_initialcreate")]
+    [Migration("20230419115125_initialcreate")]
     partial class initialcreate
     {
         /// <inheritdoc />
@@ -38,9 +38,8 @@ namespace GraduationProject.Migrations
                     b.Property<bool>("CreativeCommonsConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Glass")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Glass")
+                        .HasColumnType("int");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -79,7 +78,7 @@ namespace GraduationProject.Migrations
                             BeverageId = 1,
                             Alcohol = true,
                             CreativeCommonsConfirmed = false,
-                            Glass = "Martini Glass",
+                            Glass = 29,
                             Image = "http://potatomargarita.com",
                             Instruction = "Shake it like a polaroid picture",
                             Name = "Potato Margarita",
@@ -91,7 +90,7 @@ namespace GraduationProject.Migrations
                             BeverageId = 2,
                             Alcohol = true,
                             CreativeCommonsConfirmed = false,
-                            Glass = "Thumbler",
+                            Glass = 27,
                             Image = "http://tomatomartini.com",
                             Instruction = "Stir it up",
                             Name = "Tomato Martini",
@@ -103,7 +102,7 @@ namespace GraduationProject.Migrations
                             BeverageId = 3,
                             Alcohol = false,
                             CreativeCommonsConfirmed = false,
-                            Glass = "Long glass",
+                            Glass = 31,
                             Image = "http://brocolioldfashined.com",
                             Instruction = "On the grind",
                             Name = "Brocoli Old Fashioned",

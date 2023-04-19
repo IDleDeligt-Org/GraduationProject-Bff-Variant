@@ -12,15 +12,13 @@ namespace GraduationProject.Controllers
     [ApiController]
     public class IngredientController : ControllerBase
     {
-        private readonly IApplicationDbContext _applicationDbContext;
         private readonly ICocktailDBApi _cocktail;
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
 
         public IngredientController(IApplicationDbContext context, ICocktailDBApi cocktailDBApi)
         {
-            _applicationDbContext = context;
             _cocktail = cocktailDBApi;
-            _context = (ApplicationDbContext)context;
+            _context = context;
         }
 
         [HttpGet("{search}")]
@@ -78,7 +76,7 @@ namespace GraduationProject.Controllers
         [HttpGet("local/all")]
         public async Task<IActionResult> GetAllIngredients()
         {
-            var ingredients = await _applicationDbContext.Ingredients.ToListAsync();
+            var ingredients = await _context.Ingredients.ToListAsync();
             return Ok(ingredients);
         }
     }

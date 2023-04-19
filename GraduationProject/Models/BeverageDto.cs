@@ -11,7 +11,7 @@ namespace GraduationProject.Models
         public string? Tag { get; set; }
         [Required]
         public bool Alcohol { get; set; }
-        public string? Glass { get; set; }
+        public GlassType Glass { get; set; }
 
         [Required]
         public string Instruction { get; set; }

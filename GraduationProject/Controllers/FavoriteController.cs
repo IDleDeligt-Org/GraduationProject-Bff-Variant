@@ -12,15 +12,13 @@ namespace GraduationProject.Controllers
     [ApiController]
     public class FavoriteController : ControllerBase
     {
-        private readonly IApplicationDbContext _applicationDbContext;
         private readonly ICocktailDBApi _cocktail;
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
 
         public FavoriteController(IApplicationDbContext context, ICocktailDBApi cocktailDBApi)
         {
-            _applicationDbContext = context;
             _cocktail = cocktailDBApi;
-            _context = (ApplicationDbContext)context;
+            _context = context;
         }
 
         [HttpGet("user/{userId}")]

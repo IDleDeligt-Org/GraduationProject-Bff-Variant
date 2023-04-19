@@ -21,7 +21,7 @@ namespace GraduationProject.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Tag = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Alcohol = table.Column<bool>(type: "bit", nullable: false),
-                    Glass = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Glass = table.Column<int>(type: "int", nullable: false),
                     Instruction = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Video = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -115,9 +115,9 @@ namespace GraduationProject.Migrations
                 columns: new[] { "BeverageId", "Alcohol", "CreativeCommonsConfirmed", "Glass", "Image", "ImageAttribution", "Instruction", "Name", "Source", "Tag", "Video" },
                 values: new object[,]
                 {
-                    { 1, true, false, "Martini Glass", "http://potatomargarita.com", null, "Shake it like a polaroid picture", "Potato Margarita", 0, "ordinary", null },
-                    { 2, true, false, "Thumbler", "http://tomatomartini.com", null, "Stir it up", "Tomato Martini", 0, "cocktail", null },
-                    { 3, false, false, "Long glass", "http://brocolioldfashined.com", null, "On the grind", "Brocoli Old Fashioned", 0, "ordinary", null }
+                    { 1, true, false, 29, "http://potatomargarita.com", null, "Shake it like a polaroid picture", "Potato Margarita", 0, "ordinary", null },
+                    { 2, true, false, 27, "http://tomatomartini.com", null, "Stir it up", "Tomato Martini", 0, "cocktail", null },
+                    { 3, false, false, 31, "http://brocolioldfashined.com", null, "On the grind", "Brocoli Old Fashioned", 0, "ordinary", null }
                 });
 
             migrationBuilder.InsertData(
