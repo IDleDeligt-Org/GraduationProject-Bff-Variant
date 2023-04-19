@@ -6,38 +6,41 @@ public static class DrinkMapper
 
     public static Beverage DrinkToBeverage(BeverageApiResponse apiDrink)
     {
-        Beverage beverage = new()
-        {
+        Beverage beverage = new(){
             BeverageId = apiDrink.idDrink,
             Name = apiDrink.strDrink!,
             Tag = apiDrink.strCategory + (apiDrink.strTags != null ? ", " + apiDrink.strTags : ""),
-            Alcohol = (!string.IsNullOrEmpty(apiDrink.strAlcoholic) && apiDrink.strAlcoholic.ToLower().Contains("non")),
+            Alcohol = (!string.IsNullOrEmpty(apiDrink.strAlcoholic) 
+                       && apiDrink.strAlcoholic.ToLower().Contains("non")),
             Glass = apiDrink.strGlass,
             Video = apiDrink.strVideo,
             Instruction = apiDrink.strInstructions!,
             Image = apiDrink.strDrinkThumb!,
             ImageAttribution = apiDrink.strImageAttribution,
-            CreativeCommonsConfirmed = (!string.IsNullOrEmpty(apiDrink.strCreativeCommonsConfirmed) && apiDrink.strCreativeCommonsConfirmed!.ToLower() == "yes"),
+            CreativeCommonsConfirmed = (!string.IsNullOrEmpty(apiDrink.strCreativeCommonsConfirmed) 
+                                        && apiDrink.strCreativeCommonsConfirmed!.ToLower() == "yes"),
             BeverageIngredients = new List<BeverageIngredient>(),
             Source = BeverageSource.CocktailDB,
         };
 
         for (int i = 1; i <= 15; i++)
         {
-            string? ingredientName = (string)apiDrink.GetType().GetProperty($"strIngredient{i}")!.GetValue(apiDrink, null)!;
-            if (string.IsNullOrEmpty(ingredientName))
-            {
+            string? ingredientName = (string)apiDrink
+                .GetType()
+                .GetProperty($"strIngredient{i}")!
+                .GetValue(apiDrink, null)!;
+            if (string.IsNullOrEmpty(ingredientName)){
                 break;
             }
 
-            string? ingredientMeasure = (string)apiDrink.GetType().GetProperty($"strMeasure{i}")!.GetValue(apiDrink, null)!;
+            string? ingredientMeasure = (string)apiDrink
+                .GetType()
+                .GetProperty($"strMeasure{i}")!
+                .GetValue(apiDrink, null)!;
 
-            beverage.BeverageIngredients.Add(new BeverageIngredient
-            {
-                Ingredient = new Ingredient
-                {
+            beverage.BeverageIngredients.Add(new BeverageIngredient{
+                Ingredient = new Ingredient{
                     Name = ingredientName,
-                    
                 },
                 Measurement = ingredientMeasure,
             });
