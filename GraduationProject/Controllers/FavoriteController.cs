@@ -93,6 +93,11 @@ namespace GraduationProject.Controllers
                     return NotFound("User not found.");
                 }
 
+                if (await _context.Favorites.AnyAsync(f => f.FavoriteBeverageId == favorite.FavoriteBeverageId))
+                {
+                    return Ok("This favorite already exists.");
+                }
+
                 var newFavorite = new Favorite{
                     FavoriteBeverageId = favorite.FavoriteBeverageId,
                     Source = favorite.Source,
@@ -114,7 +119,8 @@ namespace GraduationProject.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFavorite(int id)
         {
-            Favorite? favorite = await _context.Favorites.FindAsync(id);
+            Favorite? favorite = await _context.Favorites.FirstOrDefaultAsync(f => f.FavoriteBeverageId == id);
+
             if (favorite == null)
             {
                 return NotFound();
