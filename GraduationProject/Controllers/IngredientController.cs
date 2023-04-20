@@ -41,7 +41,9 @@ namespace GraduationProject.Controllers
             var results = localResults.Concat(apiResults).ToList();
 
             if(results.Count == 0) {
-                return NotFound();
+                
+               return Ok(new List<Beverage>());
+           
             }
 
             return Ok(results);
@@ -67,7 +69,7 @@ namespace GraduationProject.Controllers
 
             if (results.Count == 0)
             {
-                return NotFound();
+                return Ok(new List<Beverage>());
             }
 
             return Ok(results);
