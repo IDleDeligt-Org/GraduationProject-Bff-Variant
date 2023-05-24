@@ -6,13 +6,13 @@ using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Microsoft.OpenApi.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+//using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connection = String.Empty;
-builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.json");
-connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+//var connection = String.Empty;                                                            <<<<NEEDED FOR AZURE
+//builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.json");          <<<<NEEDED FOR AZURE
+//connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");     <<<<NEEDED FOR AZURE
 
 // Add services to the container.
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -21,8 +21,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 builder.Services.AddDbContext<IApplicationDbContext, GraduationProject.ApplicationDbContext>(options =>
 {
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    options.UseSqlServer(connection);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    //options.UseSqlServer(connection);                                                     <<<<NEEDED FOR AZURE
 });
 builder.Services.AddHttpClient<ICocktailDBApi, CocktailDBApi>(httpClient =>
 {

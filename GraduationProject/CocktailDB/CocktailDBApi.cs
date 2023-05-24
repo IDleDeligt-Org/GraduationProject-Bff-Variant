@@ -79,6 +79,7 @@ namespace GraduationProject.CocktailDB
                         {
                             Beverage beverage = await GetBeverageById(beverageApiResponse.idDrink);
                             beverages.Add(beverage);
+                            // Add sleep
                         }
                     }
                     return beverages;
