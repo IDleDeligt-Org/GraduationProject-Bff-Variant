@@ -5,6 +5,7 @@ namespace GraduationProject.Models
     public class Beverage
     {
         public int BeverageId { get; set; }
+        public int ApiId { get; set; }
 
         [Required(ErrorMessage = "Please enter a name for the beverage")]
         [StringLength (50, ErrorMessage = "Beverage name cannot be longer than 50 characters")]
@@ -34,11 +35,8 @@ namespace GraduationProject.Models
         public string? ImageAttribution { get; set; }
         public bool CreativeCommonsConfirmed { get; set; }
 
-       
-
         //Navigation Properties
         public virtual ICollection<BeverageIngredient> BeverageIngredients { get; set; }
-
 
         //[Required]
         public BeverageSource Source { get; set; }

@@ -7,7 +7,7 @@ public static class DrinkMapper
     public static Beverage DrinkToBeverage(BeverageApiResponse apiDrink)
     {
         Beverage beverage = new(){
-            BeverageId = apiDrink.idDrink,
+            ApiId = apiDrink.idDrink,
             Name = apiDrink.strDrink!,
             Tag = apiDrink.strCategory + (apiDrink.strTags != null ? ", " + apiDrink.strTags : ""),
             Alcohol = (!string.IsNullOrEmpty(apiDrink.strAlcoholic)

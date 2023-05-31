@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Threading.Tasks;
+using GraduationProject.Models.CocktailDB;
 
 
 namespace GraduationProject.Controllers
@@ -14,42 +15,50 @@ namespace GraduationProject.Controllers
     [ApiController]
     public class BeverageController : ControllerBase
     {
-        private readonly ICocktailDBApi _cocktail;
+        private readonly ICocktailDBApi _cocktailDbApi;
         private readonly IApplicationDbContext _context;
 
         public BeverageController(IApplicationDbContext context, ICocktailDBApi cocktailDBApi)
-        { 
-            _cocktail = cocktailDBApi;
+        {
+            _cocktailDbApi = cocktailDBApi;
             _context = context;
         }
 
         [HttpGet("{search}")]
-        public async Task<IActionResult> GetBeveragesByName(string search)
+        public async Task<IActionResult> GetBeveragesByName( string search )
         {
-            // Query local database
+            // Get cocktails from the API
+            List<Beverage>? apiResponses = await _cocktailDbApi.GetBeveragesByName(search);
+
+            // Get IDs of the cocktails from the API results
+            var apiIds = apiResponses.Select(b => b.ApiId).ToList();
+
+            // Get cocktails from the local database
             var localResults = await _context.Beverages
-                .Where(b => b.Name.Contains(search))
+                .Where(b => apiIds.Contains(b.ApiId))
                 .Include(b => b.BeverageIngredients)
                 .ThenInclude(bi => bi.Ingredient)
                 .ToListAsync();
 
-            // Query third-party API
-            var apiResults = await _cocktail.GetBeveragesByName(search);
+            // Get IDs of the cocktails in the local database
+            var localApiIds = localResults.Select(b => b.ApiId).ToList();
 
-            if (localResults == null)
-            {
-                return Ok(apiResults);
-            }
-            // Combine and return results
-            var results = localResults.Concat(apiResults).ToList();
+            // Find cocktails that are in the API results but not in the local database
+            var newCocktails = apiResponses.Where(b => !localApiIds.Contains(b.ApiId)).ToList();
 
-            if (results.Count == 0)
-            {
-                return Ok(new List<Beverage>());
+            // Add new cocktails to the local database
+            foreach (var newCocktail in newCocktails) {
+                _context.Beverages.Add(newCocktail);
             }
 
-            return Ok(results);
+            await _context.SaveChangesAsync();
+
+            // Combine local and new results
+            var allCocktails = localResults.Concat(newCocktails).ToList();
+
+            return Ok(allCocktails);
         }
+
 
         [HttpGet("id/{id}")]
         public async Task<IActionResult> GetBeverage(int id)
@@ -231,10 +240,3 @@ namespace GraduationProject.Controllers
         }
     }
 }
-
-
-
-
-
-
-

@@ -31,22 +31,26 @@ namespace GraduationProject.Controllers
                 .ThenInclude(bi => bi.Ingredient)
                 .ToListAsync();
 
-            List<Beverage> apiResults = await _cocktail.GetBeveragesByIngredient(search);
+            //// Query third-party API
+            //List<Beverage> apiResults = await _cocktail.GetBeveragesByIngredient(search);
 
-            if (localResults == null)
-            {
-                return Ok(apiResults);
-            }
-            // Combine and return results
-            var results = localResults.Concat(apiResults).ToList();
+            //if (localResults == null)
+            //{
+            //    return Ok(apiResults);
+            //}
 
-            if(results.Count == 0) {
+            //// Combine and return results
+            //var results = localResults.Concat(apiResults).ToList();
+
+            //if(results.Count == 0) {
                 
-               return Ok(new List<Beverage>());
+            //   return Ok(new List<Beverage>());
            
-            }
+            //}
 
-            return Ok(results);
+            //return Ok(results);
+
+            return Ok(localResults);
         }
 
         [HttpGet("search/non_alcoholic")]
@@ -58,21 +62,25 @@ namespace GraduationProject.Controllers
                 .ThenInclude(bi => bi.Ingredient)
                 .ToListAsync();
 
-            List<Beverage> apiResults = await _cocktail.GetAllNonAlcoholicDrinks();
+            //// Query third-party API
+            //List<Beverage> apiResults = await _cocktail.GetAllNonAlcoholicDrinks();
 
-            if (localResults == null)
-            {
-                return Ok(apiResults);
-            }
-            // Combine and return results
-            var results = localResults.Concat(apiResults).ToList();
+            //if (localResults == null)
+            //{
+            //    return Ok(apiResults);
+            //}
 
-            if (results.Count == 0)
-            {
-                return Ok(new List<Beverage>());
-            }
+            //// Combine and return results
+            //var results = localResults.Concat(apiResults).ToList();
 
-            return Ok(results);
+            //if (results.Count == 0)
+            //{
+            //    return Ok(new List<Beverage>());
+            //}
+
+            //return Ok(results);
+
+            return Ok(localResults);
         }
         
         [HttpGet("local/all")]
