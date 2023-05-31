@@ -11,7 +11,7 @@ using GraduationProject.Models.CocktailDB;
 
 namespace GraduationProject.Controllers
 {
-    [Route("api/beverage")]
+    [Route("api/beverage")] 
     [ApiController]
     public class BeverageController : ControllerBase
     {

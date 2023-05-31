@@ -1,7 +1,7 @@
 ﻿using GraduationProject.Models;
 using GraduationProject.Models.CocktailDB;
 
-public static class DrinkMapper
+public static class DrinkMapper 
 {
 
     public static Beverage DrinkToBeverage(BeverageApiResponse apiDrink)
@@ -23,23 +23,46 @@ public static class DrinkMapper
             Source = BeverageSource.CocktailDB,
         };
 
-        for (int i = 1; i <= 15; i++)
-        {
+        //for (int i = 1; i <= 15; i++)
+        //{
+        //    string? ingredientName = (string)apiDrink
+        //        .GetType()
+        //        .GetProperty($"strIngredient{i}")!
+        //        .GetValue(apiDrink, null)!;
+        //    if (string.IsNullOrEmpty(ingredientName)){
+        //        break;
+        //    }
+
+        //    string? ingredientMeasure = (string)apiDrink
+        //        .GetType()
+        //        .GetProperty($"strMeasure{i}")!
+        //        .GetValue(apiDrink, null)!;
+
+        //    beverage.BeverageIngredients.Add(new BeverageIngredient{
+        //        Ingredient = new Ingredient{
+        //            Name = ingredientName,
+        //        },
+        //        Measurement = ingredientMeasure,
+        //    });
+        //}
+
+        for (int i = 1; i <= 15; i++) {
             string? ingredientName = (string)apiDrink
                 .GetType()
                 .GetProperty($"strIngredient{i}")!
                 .GetValue(apiDrink, null)!;
-            if (string.IsNullOrEmpty(ingredientName)){
+            if (string.IsNullOrEmpty(ingredientName)) {
                 break;
             }
 
-            string? ingredientMeasure = (string)apiDrink
-                .GetType()
-                .GetProperty($"strMeasure{i}")!
-                .GetValue(apiDrink, null)!;
+            var measureProp = apiDrink.GetType().GetProperty($"strMeasure{i}");
+            var rawMeasure = measureProp?.GetValue(apiDrink);
+            string ingredientMeasure = rawMeasure as string ?? "";
 
-            beverage.BeverageIngredients.Add(new BeverageIngredient{
-                Ingredient = new Ingredient{
+            beverage.BeverageIngredients.Add(new BeverageIngredient
+            {
+                Ingredient = new Ingredient
+                {
                     Name = ingredientName,
                 },
                 Measurement = ingredientMeasure,

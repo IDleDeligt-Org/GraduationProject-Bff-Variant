@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraduationProject.Controllers
 { 
-    [Route("api/ingredient")]
+    [Route("api/ingredient")] 
     [ApiController]
     public class IngredientController : ControllerBase
     {

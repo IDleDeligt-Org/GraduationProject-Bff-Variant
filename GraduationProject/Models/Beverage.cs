@@ -4,7 +4,7 @@ namespace GraduationProject.Models
 {
     public class Beverage
     {
-        public int BeverageId { get; set; }
+        public int BeverageId { get; set; } 
         public int ApiId { get; set; }
 
         [Required(ErrorMessage = "Please enter a name for the beverage")]
