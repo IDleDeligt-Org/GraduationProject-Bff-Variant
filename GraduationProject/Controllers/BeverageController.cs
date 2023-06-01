@@ -24,7 +24,7 @@ namespace GraduationProject.Controllers
             _context = context;
         }
 
-        [HttpGet("{search}")]
+        [HttpGet("name/{search}")]
         public async Task<IActionResult> GetBeveragesByName( string search )
         {
             // Get cocktails from the API
@@ -59,6 +59,75 @@ namespace GraduationProject.Controllers
             return Ok(allCocktails);
         }
 
+        [HttpGet("ingredient/{search}")]
+        public async Task<IActionResult> GetBeveragesByIngredient( string search )
+        {
+            // Get beverages from the API
+            List<Beverage>? apiResponses = await _cocktailDbApi.GetBeveragesByIngredient(search);
+
+            // Get IDs of the beverages from the API results
+            var apiIds = apiResponses.Select(b => b.ApiId).ToList();
+
+            var localResults = await _context.Beverages
+                .Where(b => b.BeverageIngredients
+                .Any(bi => bi.Ingredient.Name.Contains(search)))
+                .Include(b => b.BeverageIngredients)
+                .ThenInclude(bi => bi.Ingredient)
+                .ToListAsync();
+
+            // Get IDs of the beverages in the local database
+            var localApiIds = localResults.Select(b => b.ApiId).ToList();
+
+            // Find beverages that are in the API results but not in the local database
+            var newBeverages = apiResponses.Where(b => !localApiIds.Contains(b.ApiId)).ToList();
+
+            // Add new beverages to the local database
+            foreach (var newBeverage in newBeverages) {
+                _context.Beverages.Add(newBeverage);
+            }
+
+            await _context.SaveChangesAsync();
+
+            // Combine local and new results
+            var allBeverages = localResults.Concat(newBeverages).ToList();
+
+            return Ok(allBeverages);
+        }
+
+        [HttpGet("search/non_alcoholic")]
+        public async Task<IActionResult> GetBeveragesNonAlcoholic()
+        {
+            // Get non-alcoholic beverages from the API
+            List<Beverage>? apiResponses = await _cocktailDbApi.GetAllNonAlcoholicDrinks();
+
+            // Get IDs of the beverages from the API results
+            var apiIds = apiResponses.Select(b => b.ApiId).ToList();
+
+            // Get beverages from the local database
+            var localResults = await _context.Beverages
+                .Where(b => apiIds.Contains(b.ApiId))
+                .Include(b => b.BeverageIngredients)
+                .ThenInclude(bi => bi.Ingredient)
+                .ToListAsync();
+
+            // Get IDs of the beverages in the local database
+            var localApiIds = localResults.Select(b => b.ApiId).ToList();
+
+            // Find beverages that are in the API results but not in the local database
+            var newBeverages = apiResponses.Where(b => !localApiIds.Contains(b.ApiId)).ToList();
+
+            // Add new beverages to the local database
+            foreach (var newBeverage in newBeverages) {
+                _context.Beverages.Add(newBeverage);
+            }
+
+            await _context.SaveChangesAsync();
+
+            // Combine local and new results
+            var allBeverages = localResults.Concat(newBeverages).ToList();
+
+            return Ok(allBeverages);
+        }
 
         [HttpGet("id/{id}")]
         public async Task<IActionResult> GetBeverage(int id)
