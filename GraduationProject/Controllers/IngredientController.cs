@@ -12,6 +12,20 @@ namespace GraduationProject.Controllers
     [ApiController]
     public class IngredientController : ControllerBase
     {
-       
+        private readonly ICocktailDBApi _cocktail;
+        private readonly IApplicationDbContext _context;
+
+        public IngredientController(IApplicationDbContext context, ICocktailDBApi cocktailDBApi)
+        {
+            _cocktail = cocktailDBApi;
+            _context = context;
+        }
+
+        [HttpGet("local/all")]
+        public async Task<IActionResult> GetAllIngredients()
+        {
+            var ingredients = await _context.Ingredients.ToListAsync();
+            return Ok(ingredients);
+        }
     }
 }
