@@ -1,0 +1,36 @@
+.main-page-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 80px);
+    padding: 0 15px;
+}
+
+.main-page-content {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.main-page-search-bar-container {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 95px;
+    left: 15px;
+    right: 15px;
+    z-index: 2;
+}
+
+
+.main-quickstart-widget {
+    padding: 10px 0px;
+}
+
+.App-logo {
+    fill: #111;
+    width: 90%;
+    height: auto;
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+}

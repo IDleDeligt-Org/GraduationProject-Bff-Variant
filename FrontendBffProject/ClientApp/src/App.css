@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+h1 {
+  font-size: 1.5em;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1.2em;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+p {
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.App {
+  width: 100vw;
+  max-width: 900px; 
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 100vh;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* .App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+} */
+
+.App-content {
+  width: 100%;
+  flex-grow: 1;
+  padding-bottom: 80px;
+}
+
+.App-link {
+  color: #ffd500ff;
+}
+
+.App-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  max-width: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffd500ff;
+  z-index: 100;
+}
+
+

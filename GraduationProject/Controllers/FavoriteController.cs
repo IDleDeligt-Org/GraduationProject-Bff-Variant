@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraduationProject.Controllers
 {
-    [Route("api/Favorite")]
+    [Route("api/favorite")]
     [ApiController]
     public class FavoriteController : ControllerBase
     {

@@ -1,0 +1,59 @@
+.cocktail-list {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 15px;
+  padding: 15px 0px;
+  padding-bottom: 80px;
+}
+
+.cocktail-item {
+  position: relative;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #00000080;
+}
+
+.cocktail-name {
+  font-size: 1.4em;
+  font-weight: 700;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #fff;
+  text-align: center;
+  background-image: linear-gradient(to top, #000000ba, transparent);
+  text-shadow: 2px 2px 2px #000000;
+  padding: 15px 15px;
+  border-radius: 5px;
+}
+
+.cocktail-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.cocktail-image-placeholder {
+  display: none;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  background-color: #ccc;
+  position: absolute;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.broken-image-icon {
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.29);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
