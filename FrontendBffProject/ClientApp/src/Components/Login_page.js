@@ -13,9 +13,7 @@ const Login_page = () => {
         navigate("/main")
     };
 
-    const handleLoginClick = () => {
-        handleLogin();
-    };
+
 
     return (
         <div className="login-page">
@@ -24,7 +22,7 @@ const Login_page = () => {
                 <h1 className="title">sipster</h1>
             </div>
             <div className='login-page-input'>
-                <button className='login-button' onClick={handleLoginClick}>Login</button>
+                <button className='login-button' onClick={handleLogin}>Login</button>
             </div>
         </div>
     );

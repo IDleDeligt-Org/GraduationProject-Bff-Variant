@@ -25,22 +25,19 @@ const MainPage = ({
       onSearchInitiated();
       let searchUrl = '/api' + urlPart;
       const response = await fetch(searchUrl);
-      console.log(response)
       const result = await response.json();
-      console.log(result);
-    setFilteredCocktails(result.$values);
+      setFilteredCocktails(result.$values);
+      return (result.$values);
   };
 
-
-
   const triggerSearchIngredient = async (searchText) => {
-    const ingredients = await triggerSearch(`/beverage/ingredient/${searchText}`);
-    return ingredients;
+      const ingredients = await triggerSearch(`/beverage/ingredient/${searchText}`);
+      return ingredients;
   };
   
   const triggerSearchBeverage = async (searchText) => {
-    const beverages = await triggerSearch(`/beverage/name/${searchText}`);
-    return beverages;
+      const beverages = await triggerSearch(`/beverage/name/${searchText}`);
+     return beverages;
   };
 
   const triggerSearchNonAlcoholic = () => {
@@ -51,7 +48,10 @@ const MainPage = ({
     onSearchInitiated();
   
     const resultIngredients = triggerSearchIngredient(searchText);
-    const resultBeverages = triggerSearchBeverage(searchText);
+      const resultBeverages = triggerSearchBeverage(searchText);
+
+      console.log(resultBeverages);
+      console.log(resultIngredients);
   
     const [ingredients, beverages] = await Promise.all([
       resultIngredients,

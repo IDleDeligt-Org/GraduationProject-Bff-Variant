@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraduationProject", "Gradua
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestingGraduationProject", "UnitTestingGraduationProject\UnitTestingGraduationProject.csproj", "{BFD88DC0-06AD-46F9-81B6-569D7732680D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendBffProject", "FrontendBffProject\FrontendBffProject.csproj", "{79A1CA34-E034-4D0D-B024-002F7B79CE45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontendBffProject", "FrontendBffProject\FrontendBffProject.csproj", "{79A1CA34-E034-4D0D-B024-002F7B79CE45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sipster.IDP", "Sipster.IDP\Sipster.IDP.csproj", "{284D5BE9-E6DF-4757-972E-0D8E9B657034}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sipster.IDP", "Sipster.IDP\Sipster.IDP.csproj", "{284D5BE9-E6DF-4757-972E-0D8E9B657034}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIdentityServer", "..\..\..\Users\MonaIrenGarnerud\source\repos\GoCloudNative.Bff\docs\demos\IdentityServer4\src\IdentityServer4\TestIdentityServer.csproj", "{238B6A7F-7E06-44B7-A2FF-D8EDF9364030}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{284D5BE9-E6DF-4757-972E-0D8E9B657034}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{284D5BE9-E6DF-4757-972E-0D8E9B657034}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{284D5BE9-E6DF-4757-972E-0D8E9B657034}.Release|Any CPU.Build.0 = Release|Any CPU
+		{238B6A7F-7E06-44B7-A2FF-D8EDF9364030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{238B6A7F-7E06-44B7-A2FF-D8EDF9364030}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{238B6A7F-7E06-44B7-A2FF-D8EDF9364030}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{238B6A7F-7E06-44B7-A2FF-D8EDF9364030}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

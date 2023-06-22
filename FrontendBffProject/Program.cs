@@ -1,5 +1,6 @@
 using GoCloudNative.Bff.Authentication.ModuleInitializers;
 using GoCloudNative.Bff.Authentication.OpenIdConnect;
+using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddSecurityBff(o =>
     o.LoadYarpFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 });
 
+builder.Services.AddHttpClient();
 
 builder.Services.AddControllersWithViews();
 
@@ -28,6 +30,7 @@ app.UseRouting();
 
 
 app.UseSecurityBff();
+
 
 app.MapFallbackToFile("index.html");
 

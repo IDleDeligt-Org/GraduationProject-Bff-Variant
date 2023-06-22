@@ -13,9 +13,19 @@ namespace Sipster.IDP
                 new IdentityResources.Email(),
             };
 
+        public static IEnumerable<ApiResource> ApiResources =>
+            new ApiResource[]
+            {
+               
+            };
+
         public static IEnumerable<ApiScope> ApiScopes =>
-            new ApiScope[]
-                { };
+            new[]
+        {
+            // local API scope
+            new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
+            new ApiScope("sipsterapi", "sipsterapi")
+        };
 
         public static IEnumerable<Client> Clients =>
             new Client[]
@@ -39,7 +49,9 @@ namespace Sipster.IDP
                         {
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
-                            IdentityServerConstants.StandardScopes.Email
+                            IdentityServerConstants.StandardScopes.Email,
+                            "sipsterapi",
+
                         },
                         ClientSecrets =
                         {

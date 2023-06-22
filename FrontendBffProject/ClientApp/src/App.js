@@ -89,7 +89,7 @@ function App() {
                             favoriteList={favoriteList}
                             onCocktailSelect={handleCocktailSelect} />} />
                         <Route path="/settings" element={<SettingsPage />} />
-                        <Route path="/" element={<Navigate replace to="login" />} />
+                        <Route path="/" element={<Navigate replace to="main" />} />
                         <Route path="/main" element={< MainPage
                         onCocktailSelect={handleCocktailSelect}
                         filteredCocktails={pageState.filteredCocktails}
@@ -110,11 +110,9 @@ function App() {
                         favoriteList={favoriteList}
                             addFavoriteList={addFavoriteList} />} />
                     </Route>
+                    <Route path='/login' element={<LoginPage />} />
                 </Routes>
             </div>
-            <Routes>
-                <Route path='/login' element={<LoginPage />} />
-            </Routes>
             <div className='App-footer'>
                 <NavBar navigateToMain={navigateBackToMain} />
             </div>

@@ -41,13 +41,15 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 });
 
+builder.Services.AddEndpointsApiExplorer();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
-    options.Authority = $"https://{builder.Configuration["Oidc:Authority"]}/";
+    options.Authority = builder.Configuration["Oidc:Authority"];
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        NameClaimType = ClaimTypes.NameIdentifier
+        ValidateAudience = false
     };
 });
 var app = builder.Build();

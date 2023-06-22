@@ -80,7 +80,7 @@ const CreateDrinkPage = ({ navigateBackToMain }) => {
     const mappedIngredients = mapIngredients();
     let response;
     try {
-      response = await fetch(process.env.REACT_APP_API_URL + "/beverage", {
+      response = await fetch("/api/beverage", {
         method: "POST",
         body: JSON.stringify({
           "beverageId": 0,
@@ -120,7 +120,7 @@ const CreateDrinkPage = ({ navigateBackToMain }) => {
 
   useEffect(() => {
     async function fetchIngredients() {
-      await fetch("/ingredient/local/all")
+      await fetch("api/ingredient/local/all")
         .then((response) => response.json())
         .then((result) => setIngredientsList(result.$values))
     }

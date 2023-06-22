@@ -16,16 +16,23 @@ export default function FavouritePage({
     e.target.style.display = 'none';
     e.target.previousSibling.style.display = 'flex';
   };
-  const url = process.env.REACT_APP_API_URL + "/Favorite/user/";
+  const url = "api/favorite/user/";
 
   useEffect(() => {
     async function fetchFavorites() {
-      await fetch(url + 2)
-        .then((response) => response.json())
-        .then((result) => setFavoriteList(result.$values))
+        await fetch(url + 2)
+            .then((response) => response.json())
+            .then((result) => {
+                setFavoriteList(result.$values);
+            }
+           )
     }
     fetchFavorites();
-  });
+  }, [setFavoriteList]);
+
+    useEffect(() => {
+        console.log(favoriteList);
+    }, [favoriteList]);
 
   function renderCocktails() {
     // Flatten the array
