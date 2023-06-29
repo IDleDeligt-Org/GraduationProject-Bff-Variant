@@ -1,3 +1,4 @@
+using Duende.IdentityServer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,22 @@ namespace Sipster.IDP
             .AddInMemoryApiResources(Config.ApiResources)
             .AddInMemoryClients(Config.Clients)
             .AddAspNetIdentity<ApplicationUser>();
+
+            builder.Services.AddAuthentication()
+                .AddFacebook("Facebook", options =>
+                    {
+                        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                        options.AppId = "1352660155659866";
+                        options.AppSecret = "73b4d3b67313f753cc5f87f8c7aae563";
+                    });
+
+            builder.Services.AddAuthentication()
+                .AddGoogle("Google", options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.ClientId = "26088718697-vo9i1peonpje2hgtulfpt9tfkg84r1fg.apps.googleusercontent.com";
+                    options.ClientSecret = "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";
+                });
 
             return builder.Build();
         }
