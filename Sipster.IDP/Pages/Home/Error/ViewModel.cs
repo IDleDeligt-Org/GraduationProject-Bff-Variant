@@ -3,7 +3,7 @@
 
 using Duende.IdentityServer.Models;
 
-namespace Sipster.IDP.Pages.Error;
+namespace IdentityServerHost.Pages.Error;
 
 public class ViewModel
 {

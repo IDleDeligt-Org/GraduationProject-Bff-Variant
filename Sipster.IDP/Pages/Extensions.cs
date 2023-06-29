@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Sipster.IDP.Pages;
+namespace IdentityServerHost.Pages;
 
 public static class Extensions
 {

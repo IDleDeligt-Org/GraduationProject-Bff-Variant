@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Sipster.IDP.Pages.Account;
+namespace IdentityServerHost.Pages.Account;
 
 public class AccessDeniedModel : PageModel
 {

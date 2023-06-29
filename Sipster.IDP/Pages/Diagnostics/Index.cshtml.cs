@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Sipster.IDP.Pages.Diagnostics;
+namespace IdentityServerHost.Pages.Diagnostics;
 
 [SecurityHeaders]
 [Authorize]

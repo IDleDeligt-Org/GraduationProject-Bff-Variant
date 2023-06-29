@@ -1,4 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Build.Framework;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Sipster.IDP.Areas.Identity.Data;
+using Sipster.IDP.Data;
 
 namespace Sipster.IDP
 {
@@ -6,18 +11,31 @@ namespace Sipster.IDP
     {
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
+
+
+            var connectionString = builder.Configuration.GetConnectionString("SipsterIDPContextConnection")
+                ?? throw new InvalidOperationException(
+                    "Connection string 'SipsterIDPContextConnection' not found. ");
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<SipsterIDPContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.AddDbContext<SipsterIDPContext>(options =>
+                options.UseSqlServer(connectionString));
+            
             builder.Services.AddRazorPages();
 
             builder.Services.AddIdentityServer(options =>
-                {
-                    // https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/api_scopes#authorization-based-on-scopes
-                    options.EmitStaticAudienceClaim = true;
-                })
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryApiResources(Config.ApiResources)
-                .AddInMemoryClients(Config.Clients)
-                .AddTestUsers(TestUsers.Users);
+            {
+                // https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/api_scopes#authorization-based-on-scopes
+                options.EmitStaticAudienceClaim = true;
+            })
+            .AddInMemoryIdentityResources(Config.IdentityResources)
+            .AddInMemoryApiScopes(Config.ApiScopes)
+            .AddInMemoryApiResources(Config.ApiResources)
+            .AddInMemoryClients(Config.Clients)
+            .AddAspNetIdentity<ApplicationUser>();
 
             return builder.Build();
         }

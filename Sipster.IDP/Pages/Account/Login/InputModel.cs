@@ -4,7 +4,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Sipster.IDP.Pages.Login;
+namespace IdentityServerHost.Pages.Login;
 
 public class InputModel
 {

@@ -1,4 +1,4 @@
-namespace Sipster.IDP.Pages.Device;
+namespace IdentityServerHost.Pages.Device;
 
 public class ViewModel
 {
